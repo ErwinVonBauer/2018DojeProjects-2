@@ -22,8 +22,8 @@ href="${pageContext.request.contextPath}/resources/style
 <ul class="topmenu" id="logined">
 <li><%=session.getAttribute("id")%>님</li>
 <li>알림</li>
-<li>회원정보수정</li>
-<li>로그아웃</li>
+<li>회원가입</li>
+<li>로그인</li>
 </ul>
 </header>
 </body>
