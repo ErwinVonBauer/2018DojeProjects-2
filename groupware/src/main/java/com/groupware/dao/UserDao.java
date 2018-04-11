@@ -9,4 +9,7 @@ public interface UserDao {
 	public void updatenewuser(UserVo vo);
 	public int useridCheck(String userid);
 	public int userpwCheck(String userpw);
+
+	public int selectUserCount(UserVo userVo);
+
 }

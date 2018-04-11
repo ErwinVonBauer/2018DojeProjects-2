@@ -14,38 +14,44 @@ import com.groupware.vo.UserVo;
 public class UserService {
 	@Autowired UserDao userdao;
 	@Autowired HttpSession session;
-	
+
 	//1.회원가입 서비스
 	public ModelAndView userjoinlogic(HttpServletRequest req, UserVo userVo, String viewName) {
 		ModelAndView model = new ModelAndView(viewName);
 		model.addObject("vo",userVo);
-			
+
 		System.out.println(userVo.toString());
 		System.out.println("success");
-			
+
 		//session.setAttribute(name, value);
 		userdao.updatenewuser(userVo);
 		return model;
 	}
-	
+
 	//2.로그인 서비스
+
+//	리턴값의 0은 부저정인 의미로 안쓰인다.
+//	숫자를 리턴할꺼면 -1로 리턴하고
+//	문자열이 좋다
+//	ex T, F
 	public String loginCheck(HttpServletRequest req){
-		String logininfo[] = req.getParameterValues("logininfo");
-		String logininfocut[] = logininfo[0].split(",");
-		String userid = logininfocut[0];
-		String userpw = logininfocut[1];
-		
-		int idoverlap = userdao.useridCheck(userid);
-		int pwoverlap = userdao.userpwCheck(userpw);
-		
-		System.out.println("확인된 아이디:"+idoverlap+"개\n확인된 비밀번호:"+pwoverlap+"개");
-		if(idoverlap+pwoverlap==2){
-			System.out.println("login_status:success");
-			session.setAttribute("id", userid);
-			return "1";	
+		String user_id = req.getParameter("user_id");
+		String user_pw = req.getParameter("user_pw");
+		String returnStr = "";
+		UserVo userVo = new UserVo();
+		userVo.setUser_id(user_id);
+		userVo.setUser_pw(user_pw);
+
+		int cnt = userdao.selectUserCount(userVo);
+
+		if(cnt == 1){
+			//session에 데이터를 넣는 부분은 따로 빼는게 좋다.
+			session.setAttribute("id", user_id);
+			returnStr = "1";
 		}else{
-			System.out.println("login_status:fail");
-			return "0";
+			returnStr = "0";
 		}
+
+		return returnStr;
 	}
 }

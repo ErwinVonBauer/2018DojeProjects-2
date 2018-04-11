@@ -23,15 +23,14 @@ public class EditorController {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("/photo_uploader");
 		view.addObject(qs);
-		System.out.println(qs);	
+		System.out.println(qs);
 		return view;
 	}
-	
+
 	// 단일파일업로드
 	  @RequestMapping("/photoUpload")
 	   public String photoUpload(HttpServletRequest req, EditorVo vo) {
 		  System.out.println("이미지컨트롤작동성공");
-		  String uploadurl = req.getParameter("textareaName");
 		  System.out.println();
 	      String callback = vo.getCallback();
 	      String callback_func = vo.getCallback_func();

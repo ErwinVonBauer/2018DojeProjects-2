@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link type="text/css" rel="stylesheet" 
+<link type="text/css" rel="stylesheet"
 href="${pageContext.request.contextPath}/resources/style
 /headerstyle.css" media="screen"/>
 <title>import header</title>

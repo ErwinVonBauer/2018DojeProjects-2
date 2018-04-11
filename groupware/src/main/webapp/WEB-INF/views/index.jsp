@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link type="text/css" rel="stylesheet" 
+<link type="text/css" rel="stylesheet"
 href="${pageContext.request.contextPath}/resources/style
 /overallstyle.css" media="screen"/>
-<link type="text/css" rel="stylesheet" 
-href="${pageContext.request.contextPath}/resources/style
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style
 /sectionstyle.css" media="screen"/>
 <title>그룹웨어 메인페이지</title>
 </head>

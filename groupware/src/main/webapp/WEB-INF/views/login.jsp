@@ -16,18 +16,24 @@
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+
+//각각의 기능을 함수로 빼놓자.
+//1. 예외처리
+//2. 로그인 성공 여부
+//3. 에러메세지
 function userlogincheck() {
 	var userid = document.getElementById("id").value;
 	var userpw = document.getElementById("pw").value;
-	var logininfo = []; //아이디와 비밀번호를 ajax로 보내기위한 배열(파라미터)
+	var logininfo = new Object();
 	var alertMsg = "";
-	
-	logininfo.push(userid);
-	logininfo.push(userpw);
-	
-	if(userid!=""&&userpw!=""){	
+
+	logininfo.user_id = userid;
+	logininfo.user_pw = userpw;
+
+	if(userid!=""&&userpw!=""){
 		$.ajax({
-			url : '/userlogincheck.ajax?logininfo='+logininfo,
+			url : '/userlogincheck.ajax',
+			data : logininfo,
 			type : 'post',
 			async: false,
 			success:function(data){
@@ -51,6 +57,17 @@ function userlogincheck() {
 
 function linktest(){
 	window.location.href = "index";
+}
+
+
+function settingElementArray(){
+
+	var elementArray = new Array();
+
+	elementArray.push($('#user_id'));
+	elementArray.push($('#user_pw'));
+
+	return elementArray;
 }
 </script>
 </html>
