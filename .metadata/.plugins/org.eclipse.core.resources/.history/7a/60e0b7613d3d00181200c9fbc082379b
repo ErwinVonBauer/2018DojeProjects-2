@@ -1,0 +1,7 @@
+package com.groupware.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class TestService {
+	@Autowired TestDao testdao;
+}

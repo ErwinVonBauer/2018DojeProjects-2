@@ -1,0 +1,11 @@
+package com.groupware.contorller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class LinkController {
+	@RequestMapping("/mainboard")
+	public String showmainboard1(HttpServletRequest req){
+		return "/mainboard";
+	}
+}

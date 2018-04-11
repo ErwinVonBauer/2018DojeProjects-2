@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+nav>#undermenu{
+	float: right;
+	width: 750px;
+	height: 50px;
+	list-style: none;
+}
+
+nav>#undermenu>li{
+	float: left;
+	width: 250px;
+	font-size: 25pt;
+	text-align: center;
+}

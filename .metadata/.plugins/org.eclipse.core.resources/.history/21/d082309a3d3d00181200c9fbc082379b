@@ -1,0 +1,7 @@
+package com.groupware.contorller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class TestController {
+	@Autowired TestService testservice;
+}

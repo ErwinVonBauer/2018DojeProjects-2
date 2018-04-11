@@ -1,0 +1,11 @@
+var loginedid = "<%=(String)session.getAttribute("id")%>";
+
+$(document).ready(function() {
+	if(loginedid!="null"&&loginedid!=""){
+		alert("회원님 환영합니다!");
+		$('#notlogin').css('display','block');
+	}else{
+
+		$('#logined').css('display','block');
+	}
+});

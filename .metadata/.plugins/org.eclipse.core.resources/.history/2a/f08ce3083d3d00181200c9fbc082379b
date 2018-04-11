@@ -1,0 +1,5 @@
+package com.groupware.dao;
+
+public class TestDao {
+	public int selectTest();
+}
