@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;groupware/src/main/webapp/resources/style/changedoc.css&apos; to &apos;changedocstyle.css&apos;" description="Rename resource &apos;changedoc.css&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/resources/style/changedoc.css" name="changedocstyle.css" stamp="1524488642202" updateReferences="true"/>
+</session>

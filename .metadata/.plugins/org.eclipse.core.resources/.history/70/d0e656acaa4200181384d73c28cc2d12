@@ -1,0 +1,16 @@
+package com.groupware.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.servlet.ModelAndView;
+
+public class EditorService {
+	public ModelAndView putQuerystring(HttpServletRequest req) {
+		String qs = req.getParameter("textAreaName");
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/photo_uploader");
+		view.addObject(qs);
+		System.out.println(qs);
+		return view;
+	}
+}

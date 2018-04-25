@@ -1,0 +1,22 @@
+package com.groupware.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.groupware.dao.DraftDao;
+
+@Controller
+public class DraftController {
+	@Autowired DraftDao draftdao;
+	
+	@RequestMapping("/draftdoc")
+	public ModelAndView selectdoc() {
+		int docs = draftdao.selectdoc();
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/draftdoc");
+		view.addObject(docs);
+		return view;
+	}
+}

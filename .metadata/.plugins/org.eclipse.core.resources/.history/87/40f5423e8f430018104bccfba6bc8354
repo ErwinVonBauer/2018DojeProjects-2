@@ -1,0 +1,64 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet"
+href="${pageContext.request.contextPath}/resources/style
+/overallstyle.css" media="screen"/>
+<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/style
+/draftdocstyle.css" media="screen"/>
+<title>종합기안문서</title>
+</head>
+<body>
+<%@include file="/WEB-INF/importviews/header.jsp"%>
+<%@include file="/WEB-INF/importviews/aside.jsp"%>
+<%@include file="/WEB-INF/importviews/nav.jsp"%>
+
+<section>
+<div id="maincontent">
+	<div id="doclist">
+	
+	</div>
+	<ul id="sortmenu">
+	<li>분류기준</li>
+	<li>문서명</li>
+	<li>수정일자</li>
+	<li>작성자</li>
+	</ul>
+	<div id="docpreview">
+	미리보기
+	</div>
+</div>
+</section>
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	var docs = new Array();
+	docs = (String[])${docs}.serialize();
+	var doccount = ${doccount};
+	
+	$(document).ready(function() {
+		if(doccount!=0){
+			$("#doclist").append
+			('<input type="button" id="editbtn"'+
+			'value="수정/편집하기" style="margin-top:323px"/>');
+			$("#doclist").append
+			('<input type="button" id="createbtn"'+
+			'onclick="gowritedoc()" value="문서생성하기"'+
+			'style="margin-top:0px"/>');
+		}else{
+			$("#doclist").append("<p>추가된 문서가 없습니다!</p>");
+			$("#doclist").append
+			('<input type="button" id="createbtn"'+
+			'onclick="gowritedoc()" value="문서생성하기"/>');
+		}
+	});
+	
+	function gowritedoc(){
+		window.location.href = "writedoc";
+	}
+	
+</script>
+</html>	

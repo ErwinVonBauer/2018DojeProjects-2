@@ -1,0 +1,12 @@
+package com.groupware;
+
+import javax.websocket.Session;
+
+public class JavaUtils {
+	Session session;
+	
+	public void addSession(String str) {
+		session.setAttribute("id");
+	}
+
+}

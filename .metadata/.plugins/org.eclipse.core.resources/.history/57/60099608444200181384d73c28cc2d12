@@ -1,0 +1,13 @@
+package com.groupware;
+
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class JavaUtils {
+	@Autowired HttpSession session;
+	
+	public void addSession(String str) {
+		session.setAttribute(str);
+	}
+
+}

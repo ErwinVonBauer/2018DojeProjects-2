@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.DraftDao">
+	<select id="selectDocCount" resultType="int" parameterType="int">
+		select count(draft_ai) from draft
+	</select>
+	<insert id="insertDoc" parameterType="com.groupware.vo.DraftVo">
+		insert into draft
+		(nb_writer,nb_title,nb_content,nb_regdate,nb_renewdate,nb_renewwriter,nb_open) 
+		values(#{writer},#{title},#{content},sysdate(),sysdate(),#{writer},#{open})
+	</insert>
+</mapper>

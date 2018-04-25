@@ -1,0 +1,17 @@
+package com.groupware.service;
+
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class CommonService {
+	@Autowired HttpSession session;
+	
+	public void addSession(String name,Object value) {
+		session.setAttribute(name, value);
+	}
+	
+	public void removeSession(String name) {
+		session.removeAttribute(name);
+	}
+
+}

@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+section>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+section>#maincontent>#doceditor{
+	width: 700px;
+	height: 400px;
+	margin-top: 20px;
+	margin-left: 25px;
+}
+
+section>#maincontent>input[type=button]{
+	float: left;
+	width: 150px;
+	margin-right: 20px;
+}

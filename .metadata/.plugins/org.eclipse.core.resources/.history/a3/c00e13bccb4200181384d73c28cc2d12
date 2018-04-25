@@ -1,0 +1,21 @@
+package com.groupware.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.groupware.dao.DraftDao;
+
+@Service
+public class DraftService {
+	@Autowired DraftDao draftdao;
+	
+	public ModelAndView selectdoc() {
+		int doccount = draftdao.selectDocCount();
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/draftdoc");
+		view.addObject("doccount",doccount);
+		System.out.println("selected docs:::"+doccount);
+		return view;
+	}
+}

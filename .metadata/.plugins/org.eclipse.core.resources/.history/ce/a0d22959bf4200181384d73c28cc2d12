@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+section>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+#maincontent>#doclist{
+	margin-top: 65px;	
+	float: left;
+	margin-left: 20px;
+	width: 200px;
+	height: 400px;
+	background-color: #40FF00;
+	overflow:scroll;
+}
+
+#maincontent>#doclist>#editbtn{
+	width: 183px;
+	height: 30px;
+	font-size: 15px;
+	margin-top: 420px;
+	display: none;
+}
+
+#maincontent>#doclist>#createbtn{
+	width: 183px;
+	height: 30px;
+	font-size: 15px;
+	margin-top: 420px;
+	display: none;
+}
+
+#maincontent>#sortmenu{
+	width: 400px;
+	height: 50px;
+	margin-top: 20px;
+	margin-left: 250px;
+	list-style: none;
+}
+
+#maincontent>#sortmenu>li{
+	width: 100px;
+	height: 50px;
+	float: left;
+	text-align: center;
+}
+
+#maincontent>#docpreview{
+	background-color: yellow;
+	width: 480px;
+	height: 400px;
+	margin-left: 250px;
+}

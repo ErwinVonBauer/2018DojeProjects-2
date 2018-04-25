@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+footer{
+	height: 50px;
+	background-color: #00FFFF;
+	position:absolute;
+    bottom:0;
+}

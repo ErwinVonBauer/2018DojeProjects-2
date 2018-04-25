@@ -1,0 +1,13 @@
+package com.groupware.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class DraftController {
+	
+	public ModelAndView selectdoc() {
+		ModelAndView view = new ModelAndView();
+		return null;
+	}
+}

@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+section>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+section>#maincontent>#managerlist{
+	width: 700px;
+	height: 360px;
+	margin-top: 20px;
+	background-color: black;
+}
+
+section>#maincontent>#pagination{
+	width: 700px;
+	height: 80px;
+	margin-top: 80px;
+	background-color: blue;
+}
