@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;groupware/src/main/webapp/resources/style/approvalstyle.css&apos; to &apos;approvalhistorystyle.css&apos;" description="Rename resource &apos;approvalstyle.css&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/resources/style/approvalstyle.css" name="approvalhistorystyle.css" stamp="1526448549151" updateReferences="true"/>
+</session>

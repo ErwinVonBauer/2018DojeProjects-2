@@ -1,9 +1,5 @@
 INDEX VERSION 1.130
 C:\Users\JunYongLee\Desktop\2018DojeProjects-master\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1603597511.index
 \groupware\src\main\java
-C:\Users\JunYongLee\Desktop\GroupwareProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1603597511.index
-\groupware\src\main\java
 C:\Users\JunYongLee\Desktop\2018DojeProjects-master\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\823401101.index
-\groupware\src\main\java
-C:\Users\JunYongLee\Desktop\GroupwareProject\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\823401101.index
 \groupware\src\main\java

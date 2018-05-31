@@ -13,14 +13,19 @@ public class EditorController {
 	@Autowired EditorService editorservice;
 	
 	//파일 업로드에 필요한 querystring 탑제 메소드
-	@RequestMapping("/makePopup")
+	@RequestMapping("/photo_uploader/popup/photo_uploader")
 	public ModelAndView putQuerystring(HttpServletRequest req) {
 		return editorservice.putQuerystring(req);
 	}
+	
+	@RequestMapping("/makePopup")
+	public String showpopup(HttpServletRequest req) {
+		return "/photo_uploader";
+	}
 
 	// 단일파일업로드
-	  @RequestMapping("/photoUpload")
-	  public String photoUpload(HttpServletRequest req, EditorVo vo) {
-		  return editorservice.photoUpload(req, vo);
-	  }
+	@RequestMapping("/photoUpload")
+	public String photoUpload(HttpServletRequest req, EditorVo vo) {
+		return editorservice.photoUpload(req, vo);
+	}
 }

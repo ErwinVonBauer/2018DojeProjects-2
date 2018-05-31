@@ -1,5 +1,0 @@
-package com.groupware.dao;
-
-public interface DraftDao {
-	public int selectdoc();
-}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,51 +19,104 @@ href="${pageContext.request.contextPath}/resources/style
 <%@include file="/WEB-INF/importviews/nav.jsp"%>
 
 <section>
-<div id="maincontent">
-	<div id="managerlist">
+	<div id="maincontent">
+		<div id="managerlist">
+			<table class="draftlist">
+    			<thead>
+    			<tr>
+     			<th>문서명</th>
+        		<th>문서종류</th>
+        		<th>임시저장여부</th>
+        		<th>문서중요여부</th>
+        		</thead>
+        		<tbody id="resultlist">
+        		<!-- 검색결과가 뿌려진다 -->
+        		</tbody>
+        	</table>
+		</div>
 	</div>
-	<div class="pagination">
-  		<a href="#">&laquo;</a>
- 		<a href="#">1</a>
- 		<a href="#" class="active">2</a>
-  		<a href="#">3</a>
-  		<a href="#">4</a>
-  		<a href="#">5</a>
- 		<a href="#">6</a>
- 		<a href="#">&raquo;</a>
-	</div>
-</div>
 </section>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	var doccount = ${doccount};
-	var docpks = ${pkarrays};
-	
 	$(document).ready(function() {
-		if(doccount!=0){
-			yesdoc();
-		}else{
-			nodoc();
-		}
+		var drafts = [];
+		
+		$.ajax({
+			url: "/getdraft.ajax?",
+			type: "get",
+			async:false,
+			success:function(data){
+				if(data==""){
+					alert("검색결과가 존재하지 않습니다.");
+				}else{
+					drafts = data;
+					console.log(drafts);
+					$.each(drafts,function(index){
+					var appendElement = $("#resultlist");
+					var appendStr = "";
+					
+					appendStr = "<tr id=result"+index+"></tr>"
+					appendElement.append(appendStr);
+					
+					appendElement = $("#result"+index);
+					
+					$.each(drafts[index],function(key,value){
+						if(key=="draft_name"||key=="draft_type"||key=="draft_temp"||key=="draft_important"){
+						appendElement = $("#result"+index);
+						if(key=="draft_type"){
+							switch(value){
+							case "report":
+								appendStr = "<td>보고서</td>";
+								break;
+							case "vacation":
+								appendStr = "<td>휴가</td>";
+								break;
+							case "etc":
+								appendStr = "<td>기타</td>";
+								break;
+							default: 
+								appendStr = "<td>null</td>";
+								break;
+							}
+						}else if(key=="draft_temp"){
+							switch(value){
+							case 0:
+								appendStr = "<td>X</td>";
+								break;
+							case 1:
+								appendStr = "<td>O</td>";
+								break;
+							default: 
+								appendStr = "<td>null</td>";
+								break;
+							}
+						}else if(key=="draft_important"){
+							switch(value){
+							case 0:
+								appendStr = "<td>X</td>";
+								break;
+							case 1:
+								appendStr = "<td>O</td>";
+								break;
+							default: 
+								appendStr = "<td>null</td>";
+								break;
+							}
+						}else{
+							appendStr = "<td>"+value+"</td>";
+						}
+						appendElement.append(appendStr);
+						}
+					});
+					});
+				}
+			},error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+status+"\n"+"error:"+error+"데이터 결과값이 없습니다!");
+			}	
+		});
 	});
 	
-	function yesdoc(){
-		$.ajax({
-			url: "/makedoclists.ajax?docpks="+docpks,
-			type: "get",
-			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-			async: false,
-			success:function(data){
-				alert(data);
-			}
-		});
-	}
-	
-	function nodoc(){
-		$("#managerlist").append('<h1>기안된 문서가 없습니다!</h1>');
-	}
-	
-	
+	/* $("#managerlist").append('<h1>기안된 문서가 없습니다!</h1>'); */
 </script>
 </body>
 </html>

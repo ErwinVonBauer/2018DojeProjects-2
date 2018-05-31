@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.AprovDao">
+
+	<insert id="insertaprov" parameterType="com.groupware.vo.ApprovalVo">
+		insert into approval
+		(draft_ai,user_ai,dep_ai,rank_ai,
+		apl_ai,aprov_reg,aprov_status,aprov_title) 
+		values(#{draft_ai},#{user_ai},#{dep_ai},#{rank_ai},
+		#{apl_ai},sysdate(),#{aprov_status},#{aprov_title})
+	</insert>
+	
+	<select id="selectAprov" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,aprov_reg,
+		draft_temp,draft_important from draft
+	</select>
+	
+</mapper>

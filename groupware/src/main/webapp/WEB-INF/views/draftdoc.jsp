@@ -19,6 +19,7 @@ href="${pageContext.request.contextPath}/resources/style
 <%@include file="/WEB-INF/importviews/nav.jsp"%>
 <section>
 <div id="maincontent">
+	<input type="hidden" id="doccount" value="${doccount}">
 	<form id="frm" action="/gochangedoc" method="post">
 	<input type="hidden" id="draft_ai" name="draft_ai" value="">
 	</form>
@@ -31,6 +32,12 @@ href="${pageContext.request.contextPath}/resources/style
          </a>
          <br><br>
      </c:forEach>
+     <input type="button" id="editbtn" value="수정/편집하기" 
+     style="margin-top:50px" onclick="linkchangedoc()"/>
+     <input type="button" id="createbtn"  value="문서생성하기"
+	 onclick="gowritedoc()" style="margin-top:0px"/>
+	 <input type="button" id="delbtn"  value="문서삭제하기"
+	 onclick="deletedoc()" style="margin-top:0px"/>
 	</div>
 	<ul id="sortmenu">
 	<li>분류기준</li>
@@ -48,38 +55,23 @@ href="${pageContext.request.contextPath}/resources/style
 <script>
 	var docs = new Array();
 	var ai = 0; //기안문서의 PrimaryKey
-	var doccount = ${doccount};
+	var doccount = $("#doccount").val();
 	
 	$(document).ready(function() {
-		if(doccount!=0){
-			yesdoc();
-		}else{
+		if(doccount==0){
 			nodoc();
 		}
 	});
 	
+	function nodoc(){
+		$("#doclist").append("<p>추가된 문서가 없습니다!</p>");
+		$("#editbtn").prop("disabled",true);
+	}
+	
 	function gowritedoc(){
 		window.location.href = "writedoc";
 	}
-	
-	function yesdoc(){
-		$("#doclist").append
-		('<input type="button" id="editbtn"'+
-		'value="수정/편집하기" style="margin-top:50px"'+
-		'onclick="linkchangedoc()"/>');
-		$("#doclist").append
-		('<input type="button" id="createbtn"'+
-		'onclick="gowritedoc()" value="문서생성하기"'+
-		'style="margin-top:0px"/>');
-	}
-	
-	function nodoc(){
-		$("#doclist").append("<p>추가된 문서가 없습니다!</p>");
-		$("#doclist").append
-		('<input type="button" id="createbtn"'+
-		'onclick="gowritedoc()" value="문서생성하기"/>');
-	}
-	
+
 	function showpreview(pk){
 		ai = pk;
 		$.ajax({
@@ -96,7 +88,31 @@ href="${pageContext.request.contextPath}/resources/style
 	
 	function linkchangedoc(){
 		$('#draft_ai').val(ai);
+		if(ai!=0){
 		$('#frm').submit();
+		}else{
+			alert("선택된 문서가 없습니다!");
+		}
+	}
+	
+	function deletedoc(){
+		if(ai!=0){
+			if(!confirm("정말로 문서를 삭제하시겠습니까?")){
+				alert("삭제가 취소되었습니다");
+			}else{
+				$.ajax({
+					url: "/godeldoc.ajax?ai="+ai,
+					type: "get",
+					async:false,
+					success:function(data){
+						alert(data);
+						location.reload();
+					}
+				});
+			}
+		}else{
+			alert("선택된 문서가 없습니다!");
+		}
 	}
 	
 </script>

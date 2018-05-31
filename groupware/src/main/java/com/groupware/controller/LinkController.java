@@ -22,19 +22,29 @@ public class LinkController {
 		return "/join";
 	}
 	
-	/*@RequestMapping("/draftmanager")
-	public String showdraftmanager(HttpServletRequest req) {
-		return "/draftmanager";
-	}*/
+	@RequestMapping("/docdraft")
+	public String showdocdraft(HttpServletRequest req){
+		return "/docdraft";
+	}
 	
-	/*@RequestMapping("/draftdoc")
-	public String showdraftdoc(HttpServletRequest req){
-		return "/draftdoc";
-	}*/
-	
-	/*@RequestMapping("/writedoc")
+	@RequestMapping("/doceditor")
 	public String showdoceditor(HttpServletRequest req){
-		return "/writedoc";
-	}*/
+		return "/doceditor";
+	}
+	
+	@RequestMapping("/docbox")
+	public String showdocbox(HttpServletRequest req){
+		return "/docbox";
+	}
+	
+	@RequestMapping("/getapproval")
+	public String showgetapproval(HttpServletRequest req){
+		return "/getapproval";
+	}
+	
+	@RequestMapping("/approvalhistory")
+	public String showapprovalhistory(HttpServletRequest req){
+		return "/approvalhistory";
+	}
 	
 }

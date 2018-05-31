@@ -31,22 +31,23 @@ public class EditorService {
 	      MultipartFile file = vo.getFiledata();
 	      String original_name = file.getOriginalFilename();
 	      String file_result = "";
+	      
 	      try {
 	         if (file != null && original_name != null && !original_name.equals("")) {
 
 	            String ext = original_name.substring(original_name.lastIndexOf(".") + 1);
 	            String rootPath = getRootPath(req);
-	            String path = rootPath + "temp" + File.separator;
+	            String path = rootPath + "imgs" + File.separator;
 	            System.out.println(rootPath);
 	            mkdir(path);
-
+	            
 	            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss", Locale.KOREA);
 	            Date date = new Date();
 	            String time = format.format(date);
 	            String real_name = time + "." + ext;
 
 	            file.transferTo(new File(path + real_name));
-	            file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/temp/" + real_name;
+	            file_result += "&bNewLine=true&sFileName=" + original_name + "&sFileURL=/imgs/" + real_name;
 	         } else {
 	            file_result += "&errstr=error";
 	         }

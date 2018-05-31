@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet"
+href="${pageContext.request.contextPath}/resources/style
+/overallstyle.css" media="screen"/>
+<link type="text/css" rel="stylesheet" 
+href="${pageContext.request.contextPath}/resources/style
+/makeapprovalstyle.css" media="screen"/>
+<title>결재올리기</title>
+</head>
+<body>
+	<%@include file="/WEB-INF/importviews/header.jsp"%>
+	<%@include file="/WEB-INF/importviews/aside.jsp"%>
+	<%@include file="/WEB-INF/importviews/nav.jsp"%>
+	<section>
+		<div id="maincontent">
+			<div id="approvalmenus">
+				<div id="doclist">
+				<c:forEach items="${docmap}" var="i">
+	 	 		<c:set var="title" value="${i.key}"/>
+	 	 		<c:set var="pk" value="${i.value}"/>
+         		<a id="${pk}" onclick="">
+         		<c:out value = '${title}'/>
+         		</a>
+        		<br><br>
+     			</c:forEach>
+				</div>
+				<div id="linelist">
+				<c:forEach items="${aplmap}" var="i">
+	 	 		<c:set var="title" value="${i.key}"/>
+	 	 		<c:set var="pk" value="${i.value}"/>
+         		<a id="${pk}" onclick="">
+         		<c:out value = '${title}'/>
+         		</a>
+        		<br><br>
+     			</c:forEach>
+				</div>
+			</div>
+			<div id="approvalsection">
+				<div id="preview">
+				<div id="docpreview">
+				
+				</div>
+				<div id="linepreview">
+				
+				S</div>
+				</div>
+				<div id="buttons">
+					<input type="button" class="approvbtn" id="docedit" value="선택된기안문서수정"/>
+					<input type="button" class="approvbtn" id="lineedit" value="선택된결재라인수정"/>
+					<input type="button" class="approvbtn" id="makeapproval" value="결재보내기"/>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

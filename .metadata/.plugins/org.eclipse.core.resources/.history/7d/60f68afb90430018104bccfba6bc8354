@@ -1,6 +1,0 @@
-@charset "UTF-8";
-
-.topmenu>li:hover {
-	background-color: #0000FF;
-	color: #FFFFFF;
-}

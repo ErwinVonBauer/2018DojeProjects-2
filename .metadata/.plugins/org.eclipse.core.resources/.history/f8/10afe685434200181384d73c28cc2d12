@@ -1,9 +1,0 @@
-package com.groupware;
-
-public class JavaUtils {
-
-	public void addSession(String str) {
-		session.removeAttribute("id");
-	}
-
-}

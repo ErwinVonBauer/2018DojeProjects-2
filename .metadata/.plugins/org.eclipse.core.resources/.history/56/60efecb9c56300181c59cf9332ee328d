@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+section>#aprovfrm>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+section>#aprovfrm>#maincontent>#approvalmenus{
+	width:200px;
+	height:450px;
+	background-color: #40FF00;	
+	margin-top: 15px;
+	margin-left: 20px;
+	float: left;
+}
+
+section>#aprovfrm>#maincontent>#approvalmenus>#doclist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#aprovfrm>#maincontent>#approvalmenus>#linelist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#aprovfrm>#maincontent>#approvalmenus>#userlist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection{
+	width: 500px;
+	height: 450px;
+	margin-top: 15px;
+	margin-left: 15px;
+	float: left;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#preview{
+	width: 500px;
+	height: 380px;
+	float: left;
+	background-color: #40FF00;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#preview>#docpreview{
+	width: 350px;
+	height: 300px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+	overflow: scroll;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#preview>#linepreview{
+	width: 120px;
+	height: 300px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+	overflow: scroll;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#preview>#userpreview{
+	width: 200px;
+	height: 50px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#preview>#aprovtitle{
+	width: 200px;
+	height: 50px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 20px;
+	background-color: white;
+}
+
+section>#aprovfrm>#maincontent>#approvalsection>#buttons{
+	width: 500px;
+	height: 50px;
+	float: left;
+	margin-top: 20px;
+	background-color: white;
+}
+section>#aprovfrm>#maincontent>#approvalsection>#buttons>.approvbtn{
+	width: 150px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 10px;
+}

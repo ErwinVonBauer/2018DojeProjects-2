@@ -12,7 +12,7 @@
 <input type="text" id="user_id" name="user_id"><br>
 <h2>비밀번호</h2><br>
 <input type="password" id="user_pw" name="user_pw"><br><br>
-<input type="button" value="로그인" id="loginbtn" name="loginbtn" onclick="login()">
+<input type="button" value="로그인" id="loginbtn" name="loginbtn" onclick="userlogincheck()">
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -90,6 +90,46 @@ function showMsg(msg){
 }
 
 //6. element array create
+
+function userlogincheck() {
+	var userid = document.getElementById("user_id").value;
+	var userpw = document.getElementById("user_pw").value;
+	var logininfo = new Object();
+	var alertMsg = "";
+
+	logininfo.user_id = userid;
+	logininfo.user_pw = userpw;
+
+	if(userid!=""&&userpw!=""){
+		$.ajax({
+			url : '/userlogincheck.ajax',
+			data : logininfo,
+			type : 'post',
+			async: false,
+			success:function(data){
+				if(data=="1"){
+					alertMsg = "로그인에 성공하였습니다!";
+					linktest();
+				}else{
+					alertMsg = "잘못된 아이디 또는 비밀번호입니다!";
+				}
+				alert(alertMsg);
+			}
+		});
+	}else if(userid==""){
+		alert("아이디를 입력해주세요!");
+		document.getElementById("id").focus();
+	}else if(userpw==""){
+		alert("비밀번호를 입력해주세요!");
+		document.getElementById("pw").focus();
+	}
+}
+
+function linktest(){
+	window.location.href = "index";
+}
+
+
 function settingElementArray(){
 
 	var elementArray = new Array();

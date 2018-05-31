@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.AprovDao">
+
+	<insert id="insertaprov" parameterType="com.groupware.vo.ApprovalVo">
+		insert into approval
+		(draft_ai,user_ai,dep_ai,rank_ai,
+		apl_ai,aprov_reg,aprov_status,aprov_title) 
+		values(#{draft_ai},#{user_ai},#{dep_ai},#{rank_ai},
+		#{apl_ai},sysdate(),#{aprov_status},#{aprov_title})
+	</insert>
+	
+	<select id="selectAprov" parameterType="int" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where user_ai = #{user_ai} and aprov_status = '0'
+	</select>
+	
+	<update id="updateAprovStatus" parameterType="int">
+		update approval set
+		aprov_status = '1',
+		aprov_reg = sysdate()
+		where aprov_ai = #{aprov_ai}
+	</update>
+	
+	<select id="selectAprovByDep" parameterType="int" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where dep_ai = #{dep_ai}
+	</select>
+	
+	<select id="selectAprovByDoc" parameterType="int" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where draft_ai = #{draft_ai}
+	</select>
+	
+	<select id="selectAprovByRank" parameterType="int" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where rank_ai = #{rank_ai}
+	</select>
+	
+	<select id="selectAprovByName" parameterType="String" resultType="java.util.HashMap">
+		select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where aprov_title = #{aprov_title}
+	</select>
+	
+	<select id="selectAllAprov" resultType="java.util.HashMap">
+	select aprov_ai,aprov_title,
+		aprov_reg,aprov_status from approval
+		where aprov_title = #{aprov_title}
+	</select>
+</mapper>

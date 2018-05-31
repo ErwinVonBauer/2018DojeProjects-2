@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="409" key="DIALOG_X_ORIGIN"/>
+		<item value="262" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="textAreaName" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="makePopup"/>
-			<item value="textAreaName"/>
-			<item value="item"/>
-			<item value="userpw"/>
+			<item value="errorpoint"/>
+			<item value="error"/>
+			<item value="pk"/>
+			<item value="search"/>
+			<item value="selectEmp"/>
+			<item value="preview"/>
+			<item value="resultlist"/>
+			<item value="searchsort"/>
+			<item value="alert"/>
+			<item value="draft_ai"/>
+			<item value="makedoclists"/>
+			<item value="dao"/>
+			<item value="selectDocContent"/>
+			<item value="insertDoc"/>
+			<item value="docs"/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -20,7 +35,7 @@
 		<item value="275" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-24|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="370" key="DIALOG_HEIGHT"/>
-		<item value="514" key="DIALOG_X_ORIGIN"/>
-		<item value="362" key="DIALOG_Y_ORIGIN"/>
+		<item value="967" key="DIALOG_X_ORIGIN"/>
+		<item value="287" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

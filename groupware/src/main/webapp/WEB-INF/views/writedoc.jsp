@@ -27,13 +27,18 @@ href="${pageContext.request.contextPath}/resources/style
 	제목:
 	<input type="text" name="draft_name" style="width: 660px"/><br>
 	문서종류: 
-	<!-- 문서종류는 편집불가능, 대신 DB에서 뿌려줌 -->
+	<select name="draft_type" style="width: 400px">
+    	<option value="">문서선택</option>
+    	<option value="vacation">휴가</option>
+    	<option value="report" selected="selected">보고서</option>
+    	<option value="etc">기타</option>
+	</select>
 	<textarea rows="10" cols="30" id="doceditor" name="draft_content">
 	</textarea>
 	<input type="button" value="수정취소" id="cancel" onclick="cancel()">
 	<input type="button" value="임시저장" id="temp" onclick="tempsave()">
 	<input type="button" value="중요문서" id="impdoc" onclick="importantdoc()">
-	<input type="button" value="수정완료" id="done" onclick="savedoc()">
+	<input type="button" value="저장완료" id="done" onclick="savedoc()">
 	</form>
 	</div>
 </section>
@@ -47,7 +52,7 @@ href="${pageContext.request.contextPath}/resources/style
    
    //로그인된 사용자의 정보를 hidden form으로 보내기
    $(document).ready(function() {
-		var content = ;
+			
 	});
    
    $(function() {
@@ -73,15 +78,13 @@ href="${pageContext.request.contextPath}/resources/style
 	   
 	   if(draft_important!=0){
 		   alertMsg = "중요문서 지정을 해제합니다";
-		   alert(alertMsg);
 		   draft_important = 0;
-		   $('#draft_important').val(draft_important);
 	   }else{
 		   alertMsg = "중요문서로 지정합니다";
-		   alert(alertMsg);
 		   draft_important = 1;
-		   $('#draft_important').val(draft_important);
 	   }
+	   $('#draft_important').val(draft_important);
+	   alert(alertMsg);
    }
    
    function tempsave(){
@@ -90,15 +93,13 @@ href="${pageContext.request.contextPath}/resources/style
 	   
 	   if(draft_temp!=0){
 		   alertMsg = "임시저장을 취소합니다.";
-		   alert(alertMsg);
 		   draft_temp = 0;
-		   $('#draft_temp').val(draft_temp);
 	   }else{
 		   alertMsg = "임시저장합니다.";
-		   alert(alertMsg);
 		   draft_temp = 1;
-		   $('#draft_temp').val(draft_temp);
 	   }
+	   $('#draft_temp').val(draft_temp);
+	   alert(alertMsg);
    }
    
    function savedoc(){

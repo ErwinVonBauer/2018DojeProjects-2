@@ -9,6 +9,9 @@ aside>#sidemenu{
 
 aside>#sidemenu>p{
 	width: 200px;
+}
+
+aside>#sidemenu>p{
 	font-size: 20pt;
 	padding-bottom: 10px;
 }

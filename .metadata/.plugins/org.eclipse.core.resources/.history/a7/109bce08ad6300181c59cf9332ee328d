@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+section>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+section>#maincontent>#approvalmenus{
+	width:200px;
+	height:450px;
+	background-color: #40FF00;	
+	margin-top: 15px;
+	margin-left: 20px;
+	float: left;
+}
+
+section>#maincontent>#approvalmenus>#doclist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#maincontent>#approvalmenus>#linelist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#maincontent>#approvalmenus>#userlist{
+	width: 180px;
+	height: 120px;
+	background-color: white;
+	margin-top: 15px;
+	overflow: scroll;
+}
+
+section>#maincontent>#approvalsection{
+	width: 500px;
+	height: 450px;
+	margin-top: 15px;
+	margin-left: 15px;
+	float: left;
+}
+
+section>#maincontent>#approvalsection>#preview{
+	width: 500px;
+	height: 380px;
+	float: left;
+	background-color: #40FF00;
+}
+
+section>#maincontent>#approvalsection>#preview>#docpreview{
+	width: 350px;
+	height: 300px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+	overflow: scroll;
+}
+
+section>#maincontent>#approvalsection>#preview>#linepreview{
+	width: 120px;
+	height: 300px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+	overflow: scroll;
+}
+
+section>#maincontent>#approvalsection>#preview>userpreview{
+	width: 480px;
+	height: 50px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	background-color: white;
+}
+
+section>#maincontent>#approvalsection>#buttons{
+	width: 500px;
+	height: 50px;
+	float: left;
+	margin-top: 20px;
+	background-color: white;
+}
+section>#maincontent>#approvalsection>#buttons>.approvbtn{
+	width: 150px;
+	height: 30px;
+	margin-top: 10px;
+	margin-left: 10px;
+}

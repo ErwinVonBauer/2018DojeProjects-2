@@ -1,0 +1,9 @@
+package com.groupware.vo;
+
+public class LineVo {
+	
+	private int apl_ai;
+	private String apl_content;
+	private String apl_name;
+	private String apl_memo;
+}

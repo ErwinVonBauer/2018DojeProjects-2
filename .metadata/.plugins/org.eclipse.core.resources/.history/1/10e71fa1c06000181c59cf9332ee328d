@@ -1,0 +1,35 @@
+package com.groupware.vo;
+
+public class LineVo {
+	
+	private int apl_ai;
+	private String apl_content;
+	private String apl_name;
+	private String apl_memo;
+	public int getApl_ai() {
+		return apl_ai;
+	}
+	public void setApl_ai(int apl_ai) {
+		this.apl_ai = apl_ai;
+	}
+	public String getApl_content() {
+		return apl_content;
+	}
+	public void setApl_content(String apl_content) {
+		this.apl_content = apl_content;
+	}
+	public String getApl_name() {
+		return apl_name;
+	}
+	public void setApl_name(String apl_name) {
+		this.apl_name = apl_name;
+	}
+	public String getApl_memo() {
+		return apl_memo;
+	}
+	public void setApl_memo(String apl_memo) {
+		this.apl_memo = apl_memo;
+	}
+	
+	
+}

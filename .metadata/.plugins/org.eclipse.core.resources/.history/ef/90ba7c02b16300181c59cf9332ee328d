@@ -1,0 +1,149 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet"
+href="${pageContext.request.contextPath}/resources/style
+/overallstyle.css" media="screen"/>
+<link type="text/css" rel="stylesheet" 
+href="${pageContext.request.contextPath}/resources/style
+/makeapprovalstyle.css" media="screen"/>
+<title>결재올리기</title>
+</head>
+<body>
+	<%@include file="/WEB-INF/importviews/header.jsp"%>
+	<%@include file="/WEB-INF/importviews/aside.jsp"%>
+	<%@include file="/WEB-INF/importviews/nav.jsp"%>
+	<section>
+		<div id="maincontent">
+			<div id="approvalmenus">
+				<div id="doclist">
+				<form id="frm" action="/gochangedoc" method="post">
+				<input type="hidden" id="draft_ai" name="draft_ai" value="">
+				</form>
+				 <c:forEach items="${docmap}" var="i">
+	 				<c:set var="title" value="${i.key}"/>
+	 	 			<c:set var="pk" value="${i.value}"/>
+         			<a id="${pk}" onclick="showdocpreview('${pk}','${title}')">
+         			<c:out value = '${title}'/>
+       				</a>
+         			<br><br>
+     			</c:forEach>
+				</div>
+				<div id="linelist">
+				<form id="frm" action="/gochangeline" method="post">
+				<input type="hidden" id="apl_ai" name="apl_ai" value="">
+				</form>
+				<c:forEach items="${aplmap}" var="i">
+	 	 			<c:set var="title" value="${i.key}"/>
+	 	 			<c:set var="pk" value="${i.value}"/>
+         			<a id="${pk}" onclick="showlinepreview('${pk}')">
+         			<c:out value = '${title}'/>
+         			</a>
+        			<br><br>
+     			</c:forEach>
+				</div>
+				<div id="userlist">
+				<c:forEach items="${usermap}" var="i">
+	 	 			<c:set var="title" value="${i.value}"/>
+	 	 			<c:set var="pk" value="${i.key}"/>
+         			<a id="${pk}" onclick="showuserpreview('${pk}')">
+         			<c:out value = '${title}'/>
+         			</a>
+        			<br><br>
+     			</c:forEach>
+				</div>
+			</div>
+			<div id="approvalsection">
+				<div id="preview">
+				<div id="docpreview">
+				
+				</div>
+				<div id="linepreview">
+				
+				</div>
+				<div id="userpreview">
+					<input type="hidden" id="user_ai" name="user_ai" value="">
+					결재담당자:
+				</div>
+				</div>
+				<div id="buttons">
+					<input type="button" class="approvbtn" id="docedit" value="선택된기안문서수정" onclick="linkchangedoc()"/>
+					<input type="button" class="approvbtn" id="lineedit" value="선택된결재라인수정" onclick=""/>
+					<input type="button" class="approvbtn" id="makeapproval" value="결재보내기"/>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	var docs = new Array();
+	var docai = 0; 
+	var lineai = 0;
+	var userai = 0;
+	var doccount = $("#doccount").val();
+	
+	function gowritedoc(){
+		window.location.href = "writedoc";
+	}
+
+	function showdocpreview(pk){
+		docai = pk;
+		$.ajax({
+			url: "/loadpreview.ajax?ai="+docai,
+			type: "get",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			async: false,
+			success:function(data){
+				$("#docpreview").empty();
+				$("#docpreview").append(data);
+			}
+		});
+	}
+	
+	function showlinepreview(pk){
+		lineai = pk;
+		$.ajax({
+			url: "/loadlinepreview.ajax?ai="+lineai,
+			type: "get",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			async: false,
+			success:function(data){
+				$("#linepreview").empty();
+				$("#linepreview").append(data);
+			}
+		});
+	}
+	
+	function showuserpreview(pk,title){
+		userai = pk;
+		var username = title;
+		$.ajax({
+			url: "/loaduserpreview.ajax?ai="+userai,
+			type: "get",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			async: false,
+			success:function(data){
+				var userinfos = username+","+data;
+				$("#userpreview").empty();
+				$("#userpreview").append(data);
+			}
+		});
+	}
+	
+	function makeapproval(){
+		$('#draft_ai').val(ai);
+		$()
+		if(ai!=0){
+		$('#frm').submit();
+		}else{
+			alert("선택된 문서가 없습니다!");
+		}
+	}
+	
+</script>
+</html>

@@ -13,5 +13,9 @@ public interface UserDao {
 	public String selectDepPK(String userid);
 	public String selectRankPK(String userid);
 	public int selectUserCount(UserVo userVo);
-
+	public String[] selectUsers();
+	public String[] selectUsersPK();
+	public int selectUserRankPK(int user_ai);
+	public int selectUserDepPK(int user_ai);
+	public int selectRankPKByName(String rank_name);
 }

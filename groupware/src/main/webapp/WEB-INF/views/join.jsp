@@ -24,30 +24,25 @@ var flags = new Array(); //폼 전송 이전 확인하는 flag
 var user_id = $('#user_id').val();
 var user_pw = $('#user_pw').val();
 var user_name = $('#user_name').val();
+var user_name = $('#user_name').val()
 
 //l.폼 최종전송
 function joinconfirm(){
-// 	var formflag = true;
+	var formflag = true;
 
-// 	korcheck(user_id,user_pw);
-// 	blankcheck(user_id,user_pw,user_name);
+	korcheck(user_id,user_pw);
+	blankcheck(user_id,user_pw,user_name);
 
-// 	for(var i=0;i<flags.length;i++){
-// 		if(flags[i]!=false){
-// 			alert("확인완료");
-// 		}else{
-// 			formflag = false;
-// 			break;
-// 		}
-// 	}
-
-// 	if(formflag){
-// 		$('#formid').submit();
-// 	}
-
-	if(checkElementAlert()){
-		$('#formid').submit();
+ 	for(var i=0;i<flags.length;i++){
+ 		if(flags[i]!=false){
+			alert("확인완료");
+		}else{
+ 			formflag = false;
+ 			break;
+ 		}
 	}
+ 	
+	$('#formid').submit();
 }
 
 //2.빈칸확인
@@ -94,6 +89,7 @@ function checkElementAlert(){
 			korea = item.data("korea");
 			alert(korea+"확인 해 주세여");
 			return false;
+			break;
 		}
 	});
 	return flag;

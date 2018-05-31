@@ -1,0 +1,26 @@
+package com.groupware.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.groupware.service.AprovService;
+
+@Controller
+public class AprovController {
+	@Autowired AprovService aprovservice;
+	
+	@RequestMapping("/makeapproval")
+	public ModelAndView showmakeapproval(HttpServletRequest req){
+		return aprovservice.showmakeapproval(req);
+	}
+	
+	@RequestMapping("/sendaprov")
+	public ModelAndView sendaprov(HttpServletRequest req){
+		return aprovservice.
+	}
+	
+}

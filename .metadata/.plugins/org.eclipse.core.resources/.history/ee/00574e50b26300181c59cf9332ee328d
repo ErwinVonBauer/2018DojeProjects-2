@@ -1,0 +1,12 @@
+package com.groupware.vo;
+
+public class ApprovalVo {
+	private int aprov_ai;
+	private int draft_ai;
+	private int user_ai;
+	private int dep_ai;
+	private int rank_ai;
+	private int apl_ai;
+	private String aprov_reg;
+	private int aprov_status;
+}

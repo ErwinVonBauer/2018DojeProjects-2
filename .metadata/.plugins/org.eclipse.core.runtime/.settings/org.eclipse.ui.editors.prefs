@@ -24,4 +24,6 @@ printMarginColor=101,101,101
 pydevOccurrenceIndicationColor=97,97,97
 searchResultIndicationColor=70,68,103
 secondaryIPColor=101,101,101
+showTextHoverAffordance=false
+show_range_indicator=false
 writeOccurrenceIndicationColor=148,133,103

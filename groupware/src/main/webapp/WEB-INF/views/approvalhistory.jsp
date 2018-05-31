@@ -1,0 +1,130 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link type="text/css" rel="stylesheet"
+href="${pageContext.request.contextPath}/resources/style
+/overallstyle.css" media="screen"/>
+<link type="text/css" rel="stylesheet" 
+href="${pageContext.request.contextPath}/resources/style
+/approvalhistorystyle.css" media="screen"/>
+<title>결재히스토리</title>
+</head>
+<body>
+	<%@include file="/WEB-INF/importviews/header.jsp"%>
+	<%@include file="/WEB-INF/importviews/aside.jsp"%>
+	<%@include file="/WEB-INF/importviews/nav.jsp"%>
+	<section>
+		<div id="maincontent">
+			<div id="search">
+				<div id="searchbar">
+					<input type="text" id="searchcontent" value=""/>
+					<input type="button" id="searchbtn" value="검색하기"/>
+				</div>
+				<div id="searchoption">
+					<input type="button" id="bydep" value="부서별" onclick="setSearchOption('dep')"/>
+					<input type="button" id="bydoc" value="문서별" onclick="setSearchOption('doc')"/>
+					<input type="button" id="byrank" value="직급별" onclick="setSearchOption('rank')"/>
+					<input type="button" id="byname" value="이름별" onclick="setSearchOption('name')"/>
+					<input type="button" id="searchall" value="전체검색" onclick="setSearchOption('all')"/>
+				</div>
+			</div>
+			<div id="searchresult">
+			<table class="aprovtlist">
+    			<thead>
+    			<tr>
+     			<th>결재명</th>
+        		<th>생성일자</th>
+        		<th>결재여부</th>
+        		</thead>
+        		<tbody id="resultlist">
+        		<!-- 검색결과가 뿌려진다 -->
+        		</tbody>
+        	</table>
+			</div>
+		</div>
+	</section>
+</body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	var searchoption = "";
+
+	
+	function setSearchOption(selection){
+		searchoption = selection;
+		
+	}
+	
+	$('#searchoption>input[type="button"]').click(function() {
+		alert($(this).val()+"로 검색됩니다.");
+	});
+	
+	$("#searchbtn").click(function() {
+		$("#resultlist").empty();
+		var searchnamme = $('#searchcontent').val();
+		if(searchoption==""||searchnamme==""){
+			alert("검색조건을 충족하지 못하였습니다!");
+		}else{
+			var searchinfos = new Array();
+			searchinfos.push(searchoption);
+			searchinfos.push(searchnamme);
+			
+			$.ajax({
+				url: "/aprovsearch.ajax?searchinfos="+searchinfos,
+				type: "get",
+				async:false,
+				success:function(data){
+					if(data==""){
+						alert("검색결과가 존재하지 않습니다.");
+					}else{
+						aprovs = data;
+						console.log(aprovs);
+						$.each(aprovs,function(index){
+						var appendElement = $("#resultlist");
+						var appendStr = "";
+						
+						appendStr = "<tr id=result"+index+"></tr>"
+						appendElement.append(appendStr);
+						
+						appendElement = $("#result"+index);
+							
+						$.each(aprovs[index],function(key,value){
+							if(key=="aprov_reg"||key=="aprov_title"||key=="aprov_status"){
+							appendElement = $("#result"+index);
+							if(key=="aprov_title"){
+								appendStr = 
+									"<td><a id='"+aprovs[index].aprov_ai+
+									"' onclick=approve('"+aprovs[index].aprov_ai+"')>"
+									+value
+									+"</a></td>";	
+							}else if(key=="aprov_status"){
+								switch(value){
+								case 0:
+									appendStr = "<td>X</td>";
+									break;
+								case 1:
+									appendStr = "<td>O</td>";
+									break;
+								default: 
+									appendStr = "<td>null</td>";
+									break;
+								}
+								}else{
+									appendStr = "<td>"+value+"</td>";
+								}
+							appendElement.append(appendStr);
+							}
+						});
+						});
+					}
+				},error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+status+"\n"+"error:"+error+"데이터 결과값이 없습니다!");
+				}	
+			});
+		}
+	});
+
+</script>
+</html>

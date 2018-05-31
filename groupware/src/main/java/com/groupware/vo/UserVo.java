@@ -7,6 +7,9 @@ public class UserVo {
 	private String user_id;
 	private String user_pw;
 	private String user_name;
+	private String dep_name = null;
+	private String rank_name = null;
+	
 	public int getUser_ai() {
 		return user_ai;
 	}
@@ -43,9 +46,24 @@ public class UserVo {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
+	public String getDep_name() {
+		return dep_name;
+	}
+	public void setDep_name(String dep_name) {
+		this.dep_name = dep_name;
+	}
+	public String getRank_name() {
+		return rank_name;
+	}
+	public void setRank_name(String rank_name) {
+		this.rank_name = rank_name;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserVo [user_ai=" + user_ai + ", dep_ai=" + dep_ai + ", rank_ai=" + rank_ai + ", user_id=" + user_id
-				+ ", user_pw=" + user_pw + ", user_name=" + user_name + "]";
+				+ ", user_pw=" + user_pw + ", user_name=" + user_name + ", dep_name=" + dep_name + ", rank_name="
+				+ rank_name + "]";
 	}
+	
 }

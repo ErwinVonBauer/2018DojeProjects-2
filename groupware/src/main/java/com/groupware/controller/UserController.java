@@ -33,4 +33,11 @@ public class UserController {
 	public ModelAndView UseLogout(HttpServletRequest req) {
 		return userservice.userlogout(req,"/index");
 	}
+	
+	//4. 사원정보 미리보여주기
+	@RequestMapping(value="/loaduserpreview.ajax",produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String loaduserpreview(HttpServletRequest req) {
+		return userservice.loaduserpreview(req);
+	}
 }

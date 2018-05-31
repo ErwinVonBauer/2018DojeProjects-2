@@ -1,5 +1,7 @@
 package com.groupware.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,21 @@ public class DraftController {
 		return commonservice.selectdoc(req);
 	}
 	
+	@RequestMapping("/draftmanager")
+	public String showdraftmanager(HttpServletRequest req) {
+		return "/draftmanager";
+	}
+	
+	@RequestMapping(value="/getdraft.ajax")
+	@ResponseBody
+	public List<DraftVo> getDraft(HttpServletRequest req) {
+		return draftservice.getDraft();
+	}
+	
 	@RequestMapping(value="/loadpreview.ajax",produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String loadpreview(HttpServletRequest req,DraftVo draftvo) {
-		return draftservice.loadpreview(req,draftvo);
+	public String loadpreview(HttpServletRequest req) {
+		return draftservice.loadpreview(req);
 	}
 	
 	@RequestMapping(value="/makedoclists.ajax",produces = "application/text; charset=utf8")
@@ -38,12 +51,13 @@ public class DraftController {
 	public ModelAndView gochangedoc(HttpServletRequest req,DraftVo draftvo) {
 		return draftservice.gochangedoc(req,draftvo,"/changedoc");
 	}
-
-	@RequestMapping("/draftmanager")
-	public ModelAndView showdraftmanager(HttpServletRequest req) {
-		return commonservice.selectdoc(req);
-	}
 	
+	@RequestMapping(value="/godeldoc.ajax",produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String godeldoc(HttpServletRequest req) {
+		return draftservice.godeldoc(req);
+	}
+
 	@RequestMapping("/writedoc")
 	public ModelAndView adduserinfo() {
 		return draftservice.adduserinfo();

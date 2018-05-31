@@ -31,15 +31,42 @@
 			from user
 		 	where user_id = #{user_id}
 	</select>
+	
 	<select id="selectDepPK" resultType="String" parameterType="com.groupware.vo.UserVo">
 		select dep_ai
 			from user
 		 	where user_id = #{user_id}
 	</select>
+	
 	<select id="selectRankPK" resultType="String" parameterType="com.groupware.vo.UserVo">
 		select rank_ai
 			from user
 		 	where user_id = #{user_id}
 	</select>
-
+	
+	<select id="selectUsersPK" resultType="String" parameterType="String">
+		select user_ai from user
+	</select>
+	
+	<select id="selectUsers" resultType="String" parameterType="String">
+		select user_name from user
+	</select>
+	
+	<select id="selectUserRankPK" resultType="int" parameterType="int">
+		select rank_ai
+		from user
+		where user_ai = #{user_ai}
+	</select>
+	
+	<select id="selectUserDepPK" resultType="int" parameterType="int">
+		select dep_ai
+		from user
+		where user_ai = #{user_ai}
+	</select>
+	
+	<select id="selectRankPKByName" resultType="int" parameterType="String">
+		select rank_ai
+		from rank
+		where rank_name = #{rank_name}
+	</select>
 </mapper>

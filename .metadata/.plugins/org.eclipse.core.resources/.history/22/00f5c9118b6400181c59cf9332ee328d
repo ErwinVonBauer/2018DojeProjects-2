@@ -1,0 +1,15 @@
+package com.groupware.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import com.groupware.vo.ApprovalVo;
+
+@Mapper
+public interface AprovDao {
+	public void insertaprov(ApprovalVo aprovvo);
+	public List<HashMap> selectAprov(int user_ai);
+	public void updateAprovStatus(int aprov_ai);
+	
+}

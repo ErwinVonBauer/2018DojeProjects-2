@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+section>#maincontent{
+	float: right;
+	width: 750px;
+	height: 480px;
+	background-color: #00FFBF;
+	margin-top: 20px;
+}
+
+section>#maincontent>#search{
+	float: left;
+	width: 700px;
+	height: 120px;
+	background-color: #01DF74;
+	margin-top: 10px;
+	margin-left: 25px;
+}
+
+section>#maincontent>#search>div{
+	float: left;
+	width: 680px;
+	height: 60px;
+	margin-left: 10px;
+}
+
+section>#maincontent>#search>#searchbar>#searchcontent{
+	float: left;
+	width: 450px;
+	height: 30px;
+	margin-top: 15px;
+}
+
+section>#maincontent>#search>#searchbar>#searchbtn{
+	float: left;
+	width: 150px;
+	height: 30px;
+	margin-top: 15px;
+	margin-left: 50px;
+}
+
+section>#maincontent>#search>#searchoption>input[type="button"]{
+	float: left;
+	width: 120px;
+	height: 30px;
+	margin-left: 10px;
+	margin-top: 15px;
+}
+
+section>#maincontent>#searchresult{
+	float: left;
+	width: 700px;
+	height: 320px;
+	background-color: #01DF74;
+	margin-top: 20px;
+	margin-left: 25px;
+	overflow:scroll;
+}
+
+section>#maincontent>#searchresult

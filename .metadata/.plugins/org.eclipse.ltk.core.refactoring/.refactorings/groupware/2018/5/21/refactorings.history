@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;&apos; to &apos;com.groupware.service.LineService.linesearch(...)&apos;&#x0D;&#x0A;- Original project: &apos;groupware&apos;&#x0D;&#x0A;- Destination element: &apos;com.groupware.service.LineService.linesearch(...)&apos;&#x0D;&#x0A;- Original element: &apos;com.groupware.service.LineService.showmakeapproval(...)&apos;" description="Copy method" destination="/src\/main\/java&lt;com.groupware.service{LineService.java[LineService~linesearch~QHttpServletRequest;" element1="/src\/main\/java&lt;com.groupware.service{LineService.java[LineService~showmakeapproval~QHttpServletRequest;" flags="589830" id="org.eclipse.jdt.ui.copy" members="1" policy="org.eclipse.jdt.ui.copyMembers" stamp="1527065939722" version="1.0"/>
+</session>
