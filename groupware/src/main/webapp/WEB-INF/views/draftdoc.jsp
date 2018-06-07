@@ -18,44 +18,43 @@ href="${pageContext.request.contextPath}/resources/style
 <%@include file="/WEB-INF/importviews/aside.jsp"%>
 <%@include file="/WEB-INF/importviews/nav.jsp"%>
 <section>
-<div id="maincontent">
+	<div id="maincontent">
 	<input type="hidden" id="doccount" value="${doccount}">
-	<form id="frm" action="/gochangedoc" method="post">
+	<input type="hidden" id="loginedid" value="<%=session.getAttribute("id")%>"/>
+ 	<form id="frm" action="/gochangedoc" method="post">
 	<input type="hidden" id="draft_ai" name="draft_ai" value="">
 	</form>
-	<div id="doclist">
-	 <c:forEach items="${docmap}" var="i">
-	 	 <c:set var="title" value="${i.key}"/>
-	 	 <c:set var="pk" value="${i.value}"/>
-         <a id="${pk}" onclick="showpreview('${pk}')">
-         <c:out value = '${title}'/>
-         </a>
-         <br><br>
-     </c:forEach>
-     <input type="button" id="editbtn" value="수정/편집하기" 
-     style="margin-top:50px" onclick="linkchangedoc()"/>
-     <input type="button" id="createbtn"  value="문서생성하기"
-	 onclick="gowritedoc()" style="margin-top:0px"/>
-	 <input type="button" id="delbtn"  value="문서삭제하기"
-	 onclick="deletedoc()" style="margin-top:0px"/>
+		<div id="doclist">
+		 <c:forEach items="${docmap}" var="i">
+		 	 <c:set var="title" value="${i.key}"/>
+		 	 <c:set var="pk" value="${i.value}"/>
+	         <a id="${pk}" onclick="showpreview('${pk}')">
+	         <c:out value = '${title}'/>
+	         </a>
+	         <br><br>
+	     </c:forEach>
+	     <input type="button" id="editbtn" value="수정/편집하기" onclick="linkchangedoc()"/>
+	     <input type="button" id="createbtn"  value="문서생성하기" onclick="gowritedoc()"/>
+		 <input type="button" id="delbtn"  value="문서삭제하기" onclick="deletedoc()"/>
+		</div>
+			<ul id="sortmenu">
+				<li>분류기준</li>
+				<li>문서명</li>
+				<li>수정일자</li>
+				<li>작성자</li>
+			</ul>
+		<div id="docpreview">
+		미리보기
+		</div>
 	</div>
-	<ul id="sortmenu">
-	<li>분류기준</li>
-	<li>문서명</li>
-	<li>수정일자</li>
-	<li>작성자</li>
-	</ul>
-	<div id="docpreview">
-	미리보기
-	</div>
-</div>
 </section>
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	var docs = new Array();
 	var ai = 0; //기안문서의 PrimaryKey
-	var doccount = $("#doccount").val();
+	var doccount = $("#doccount").val(); //DB에 저장된 문서의 개수
+	var alertNoDoc = "선택된 문서가 없습니다!";
 	
 	$(document).ready(function() {
 		if(doccount==0){
@@ -63,16 +62,20 @@ href="${pageContext.request.contextPath}/resources/style
 		}
 	});
 	
+	//1.문서가 존재하지 않을 경우 편집불가 상태로 전환
 	function nodoc(){
 		$("#doclist").append("<p>추가된 문서가 없습니다!</p>");
 		$("#editbtn").prop("disabled",true);
 	}
 	
+	//2.문서생성 링크
 	function gowritedoc(){
 		window.location.href = "writedoc";
 	}
-
+	
+	//3.문서미리보기
 	function showpreview(pk){
+		//onlyMember();
 		ai = pk;
 		$.ajax({
 			url: "/loadpreview.ajax?ai="+ai,
@@ -86,16 +89,19 @@ href="${pageContext.request.contextPath}/resources/style
 		});
 	}
 	
+	//4.문서편집하기
 	function linkchangedoc(){
 		$('#draft_ai').val(ai);
 		if(ai!=0){
 		$('#frm').submit();
 		}else{
-			alert("선택된 문서가 없습니다!");
+			alert(alertNoDoc);
 		}
 	}
 	
+	//5.문서삭제하기
 	function deletedoc(){
+		//onlyMember();
 		if(ai!=0){
 			if(!confirm("정말로 문서를 삭제하시겠습니까?")){
 				alert("삭제가 취소되었습니다");
@@ -111,7 +117,18 @@ href="${pageContext.request.contextPath}/resources/style
 				});
 			}
 		}else{
-			alert("선택된 문서가 없습니다!");
+			alert(alertNoDoc);
+		}
+	}
+	
+	//6.비로그인 여부 확인(권한제한)
+	function onlyMember(){
+		var member = $('.loginedid').val();
+		var alertMsg = "회원만 사용가능한 기능입니다!";
+		
+		if(member==null){
+			alert(alertMsg);
+			location.href="login";
 		}
 	}
 	

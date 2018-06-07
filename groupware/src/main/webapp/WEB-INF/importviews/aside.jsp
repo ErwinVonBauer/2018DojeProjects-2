@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" 
 href="${pageContext.request.contextPath}/resources/style
 /asidestyle.css" media="screen"/>
-<title>Insert title here</title>
+<title>종합문서기안</title>
 </head>
 <body>
 <aside>

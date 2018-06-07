@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.DraftDao">
+
+	
+	<select id="selectDocCount" resultType="int" parameterType="int">
+		select count(draft_ai) from draft
+	</select>
+	
+	<select id="selectDocPK" resultType="int" parameterType="String">
+		select draft_ai from draft
+		where draft_name = #{draft_name};
+	</select>
+	
+	<select id="selectDocsPK" resultType="String" parameterType="String">
+		select draft_ai from draft;
+	</select>
+	
+	<select id="selectDocContent" resultType="String" parameterType="int">
+		select draft_content from draft
+		where draft_ai = #{draft_ai}
+	</select>
+	
+	<select id="selectDraftInfos" resultType="com.groupware.vo.DraftVo" parameterType="int">
+		select * from draft
+		where draft_ai = #{pk}
+	</select>
+	
+	<select id="selectDocs" resultType="String" parameterType="String">
+		select draft_name from draft;
+	</select>
+	
+	<insert id="insertDoc" parameterType="com.groupware.vo.DraftVo">
+		insert into draft
+		(user_ai,dep_ai,rank_ai,
+		draft_name,draft_content,draft_type,
+		draft_temp,draft_important) 
+		values(#{user_ai},#{dep_ai},#{rank_ai},
+		#{draft_name},#{draft_content},#{draft_type},
+		#{draft_temp},#{draft_important})
+	</insert>
+	
+	<update id="updateDoc" parameterType="com.groupware.vo.DraftVo">
+		update draft set
+		draft_name = #{draft_name},
+		draft_content = #{draft_content},
+		draft_type = #{draft_type},
+		draft_temp = ${draft_temp},
+		draft_important = ${draft_important}
+		where draft_ai = ${draft_ai}
+	</update>
+	
+	<delete id="deleteDraft" parameterType="int">
+		delete from draft where draft_ai = #{draft_ai};
+	</delete>
+</mapper>

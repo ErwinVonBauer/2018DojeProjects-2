@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.LineDao">
+	
+	<select id="selectAplsPK" resultType="String" parameterType="String">
+		select apl_ai from approvalline;
+	</select>
+	
+	<select id="selectAplsName" resultType="String" parameterType="String">
+		select apl_name from approvalline;
+	</select>
+	
+	<select id="selectLineContentbyPK" resultType="String" parameterType="int">
+		select apl_content from approvalline
+		where apl_ai = #{apl_ai}
+	</select>
+	
+	<insert id="insertApl" parameterType="com.groupware.vo.LineVo">
+		insert into approvalline
+		(apl_content,apl_name,apl_memo) 
+		values(#{apl_content},#{apl_name},#{apl_memo})
+	</insert>
+<!-- ============================================================================= -->
+
+
+</mapper>

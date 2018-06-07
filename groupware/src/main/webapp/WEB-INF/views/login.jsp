@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 </head>
 <body>
 <h1>로그인</h1><br>
@@ -12,15 +12,11 @@
 <input type="text" id="user_id" name="user_id"><br>
 <h2>비밀번호</h2><br>
 <input type="password" id="user_pw" name="user_pw"><br><br>
-<input type="button" value="로그인" id="loginbtn" name="loginbtn" onclick="userlogincheck()">
+<input type="button" value="로그인" id="loginbtn" name="loginbtn" onclick="login()">
+<input type="button" value="회원가입" id="joinbtn" onclick="gojoin()">
 </body>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-
-//각각의 기능을 함수로 빼놓자.
-//1. 예외처리
-//2. 로그인 성공 여부
-//3. 에러메세지
 var alertMsg = "";
 
 //1.로그인
@@ -33,7 +29,7 @@ function login() {
 	if(flag){
 		loginproc();
 	}else{
-		alert("실패");
+		alert("로그인실패!");
 	}
 }
 
@@ -48,7 +44,7 @@ function loginexception(){
 		flag = checkElementEmpty(item);
 		if(flag == false){
 			alertMsg = "비어있는 항목이 있습니다!";
-			showMsg(alertMsg);
+			alert(alertMsg);
 			return false;
 		}
 	});
@@ -61,19 +57,19 @@ function loginproc(){
 	var logininfo = new Object();
 	logininfo.user_id = user_id;
 	logininfo.user_pw = user_pw;
-	
+
 	$.ajax({
 		url : '/userlogincheck.ajax',
 		data : logininfo,
 		type : 'post',
-		success:function(data){
-			if(data=="1"){
+		success:function(data){	
+			if(data=="T"){
 				alertMsg = "로그인에 성공하였습니다!";
-				showMsg(alertMsg);
+				alert(alertMsg);
 				loginsuclink();
 			}else{
 				alertMsg = "잘못된 아이디 또는 비밀번호입니다!";
-				showMsg(alertMsg);
+				alert(alertMsg);
 			}
 		}
 	});
@@ -84,52 +80,7 @@ function loginsuclink(){
 	window.location.href = "index";
 }
 
-//5.다용도Alert메소드
-function showMsg(msg){
-	alert(msg);
-}
-
-//6. element array create
-
-function userlogincheck() {
-	var userid = document.getElementById("user_id").value;
-	var userpw = document.getElementById("user_pw").value;
-	var logininfo = new Object();
-	var alertMsg = "";
-
-	logininfo.user_id = userid;
-	logininfo.user_pw = userpw;
-
-	if(userid!=""&&userpw!=""){
-		$.ajax({
-			url : '/userlogincheck.ajax',
-			data : logininfo,
-			type : 'post',
-			async: false,
-			success:function(data){
-				if(data=="1"){
-					alertMsg = "로그인에 성공하였습니다!";
-					linktest();
-				}else{
-					alertMsg = "잘못된 아이디 또는 비밀번호입니다!";
-				}
-				alert(alertMsg);
-			}
-		});
-	}else if(userid==""){
-		alert("아이디를 입력해주세요!");
-		document.getElementById("id").focus();
-	}else if(userpw==""){
-		alert("비밀번호를 입력해주세요!");
-		document.getElementById("pw").focus();
-	}
-}
-
-function linktest(){
-	window.location.href = "index";
-}
-
-
+//5. element array create
 function settingElementArray(){
 
 	var elementArray = new Array();
@@ -148,6 +99,10 @@ function checkElementEmpty(element){
 		flag = false;
 	}
 	return flag;
+}
+
+function gojoin(){
+	location.href = "join";
 }
 </script>
 </html>

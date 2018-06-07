@@ -1,0 +1,169 @@
+package com.groupware.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.groupware.dao.AprovDao;
+import com.groupware.dao.DraftDao;
+import com.groupware.dao.LineDao;
+import com.groupware.dao.UserDao;
+import com.groupware.vo.ApprovalVo;
+
+@Service
+public class AprovService {
+	@Autowired AprovDao aprovdao;
+	@Autowired LineDao linedao;
+	@Autowired DraftDao draftdao;
+	@Autowired UserDao userdao;
+	
+	public ModelAndView showmakeapproval(HttpServletRequest req) {
+		String[] docspk = draftdao.selectDocsPK(); //문서PK
+		String[] docs = draftdao.selectDocs(); //문서명
+		String[] aplspk = linedao.selectAplsPK();
+		String[] aplsname = linedao.selectAplsName();
+		String [] userspk = userdao.selectUsersPK();
+		String [] users = userdao.selectUsers();
+		
+		HashMap<String, Integer> docmap = new HashMap<String, Integer>(); //문서PK+문서명
+		HashMap<String, Integer> aplmap = new HashMap<String, Integer>(); //라인PK+라인명
+		HashMap<Integer,String> usermap = new HashMap<Integer,String>(); //유저PK+유저명
+		ModelAndView view = new ModelAndView();
+		
+		for(int i=0;i<docspk.length;i++) {
+			docmap.put(docs[i], Integer.parseInt(docspk[i]));
+		}
+		
+		for(int i=0;i<aplspk.length;i++) {
+			aplmap.put(aplsname[i], Integer.parseInt(aplspk[i]));
+		}
+		
+		for(int i=0;i<userspk.length;i++) {
+			usermap.put(Integer.parseInt(userspk[i]),users[i]);
+		}
+		
+		view.setViewName("/makeapproval");
+		view.addObject("docmap", docmap);
+		view.addObject("aplmap", aplmap);
+		view.addObject("usermap",usermap);
+		
+		return view;
+	}
+	
+	public String insertaprov(ApprovalVo aprovvo,String view){
+		int dep_ai = userdao.selectDepPKbyUserPK(aprovvo.getUser_ai());
+		int rank_ai = userdao.selectRankPKbyUserPK(aprovvo.getUser_ai());
+		aprovvo.setDep_ai(dep_ai);
+		aprovvo.setRank_ai(rank_ai);
+		aprovdao.insertaprov(aprovvo);
+		return view;
+	}
+	
+	public List<ApprovalVo> getaprovlist(HttpServletRequest req) {
+		String userid = (String) req.getParameter("userid");
+		int user_ai = Integer.parseInt(userdao.selectUserPK(userid));
+		
+		@SuppressWarnings("rawtypes")
+		List<HashMap> aprovlist = aprovdao.selectAprov(user_ai);
+		List<ApprovalVo> aprovvos = new ArrayList<ApprovalVo>();
+		
+		if(aprovlist.size()!=0) {
+		for(int i=0;i<aprovlist.size();i++) {
+			ApprovalVo vo = new ApprovalVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
+			String sLatestLoginDate = "";
+			
+			try {
+				  java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				  sLatestLoginDate = formatter.format(aprovlist.get(i).get("aprov_reg"));
+				} catch (Exception ex) {
+				  ex.printStackTrace();
+				  sLatestLoginDate = "";
+				}
+			
+			vo.setAprov_ai((int)aprovlist.get(i).get("aprov_ai"));
+			vo.setAprov_title((String)aprovlist.get(i).get("aprov_title"));
+			vo.setAprov_reg(sLatestLoginDate);
+			vo.setAprov_status((int)aprovlist.get(i).get("aprov_status"));
+			aprovvos.add(vo);
+		}
+			return aprovvos;
+		}else {
+			System.out.println("warning no results!!!");
+			return null;
+		}
+	}
+	
+	public ModelAndView completeaprov(HttpServletRequest req,String viewName) {
+		ModelAndView view = new ModelAndView();
+		int aprov_pk = Integer.parseInt(req.getParameter("pk"));
+		System.out.println(aprov_pk);
+		
+		aprovdao.updateAprovStatus(aprov_pk);
+		view.setViewName(viewName);
+		return view;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<ApprovalVo> aprovsearch(HttpServletRequest req) {
+		String[] reqarray = req.getParameterValues("searchinfos");
+		String[] searchinfos = reqarray[0].split(",");
+		String searchoption = searchinfos[0];
+		String keyword = searchinfos[1];	
+		List<ApprovalVo> aprovvos = new ArrayList<ApprovalVo>();
+		
+		//리팩토링 필요,임시메소드
+		if(searchoption.equals("dep")) {
+			int dep_pk = linedao.selectDepPKbyName(keyword);
+			List<HashMap> deplist = aprovdao.selectAprovByDep(dep_pk);
+			aprovvos = makeSearchList(deplist, aprovvos);
+		}else if(searchoption.equals("doc")) {
+			int draft_pk = draftdao.selectDocPK(keyword);
+			List<HashMap> doclist = aprovdao.selectAprovByDoc(draft_pk);
+			aprovvos = makeSearchList(doclist, aprovvos);
+		}else if(searchoption.equals("rank")) {
+			int rank_pk = userdao.selectRankPKByName(keyword);
+			List<HashMap> ranklist = aprovdao.selectAprovByRank(rank_pk);
+			aprovvos = makeSearchList(ranklist, aprovvos);
+		}else if(searchoption.equals("name")) {
+			List<HashMap> namelist = aprovdao.selectAprovByName(keyword);
+			aprovvos = makeSearchList(namelist, aprovvos);
+		}else if(searchoption.equals("all")) {
+			List<HashMap> alllist = aprovdao.selectAllAprov();
+			aprovvos = makeSearchList(alllist, aprovvos);
+		}
+		return aprovvos;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<ApprovalVo> makeSearchList(List<HashMap> list,List<ApprovalVo> aprovvos){
+		if(list.size()!=0) {
+			for(int i=0;i<list.size();i++) {
+				ApprovalVo vo = new ApprovalVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
+				String sLatestLoginDate = "";
+				
+				try {
+					  java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					  sLatestLoginDate = formatter.format(list.get(i).get("aprov_reg"));
+					} catch (Exception ex) {
+					  ex.printStackTrace();
+					  sLatestLoginDate = "";
+					}
+				
+				vo.setAprov_ai((int)list.get(i).get("aprov_ai"));
+				vo.setAprov_title((String)list.get(i).get("aprov_title"));
+				vo.setAprov_reg(sLatestLoginDate);
+				vo.setAprov_status((int)list.get(i).get("aprov_status"));
+				aprovvos.add(vo);
+			}
+			return aprovvos;
+			}else {
+				System.out.println("warning no results!!!");
+				return null;
+			}
+	}
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.UserDao">
+	
+	<!--LoginProc-->
+	<select id="userIdCheck" resultType="int" parameterType="String">
+		select count(user_id) 
+			from user 
+			where user_id = #{userid}
+	</select>
+
+	<select id="userPwCheck" resultType="int" parameterType="String">
+		select count(user_pw) 
+			from user 
+			where user_pw = #{userpw}
+	</select>
+	
+	<insert id="updatenewuser" parameterType="com.groupware.vo.UserVo">
+		insert into user
+			(user_id,user_pw,user_name,user_reg)
+			values
+			(#{user_id},#{user_pw},#{user_name},sysdate())
+	</insert>
+
+	<select id="selectUserCount" resultType="int" parameterType="com.groupware.vo.UserVo">
+		select count(user_pw)
+			from user
+		 	where user_pw = #{user_pw} and
+		 	 	  user_id = #{user_id}
+	</select>
+<!--===============================================================================-->
+	<!--1.User-->
+	<select id="selectUserPK" resultType="int" parameterType="String">
+		select user_ai
+			from user
+		 	where user_id = #{user_id}
+	</select>
+	
+	<select id="selectUsersPK" resultType="String" parameterType="String">
+		select user_ai from user
+	</select>
+	
+	<select id="selectUsers" resultType="String" parameterType="String">
+		select user_name from user
+	</select>
+	
+	<select id="selectEmp" resultType="java.util.HashMap" parameterType="String">
+		select user_ai,dep_ai,rank_ai,user_name 
+		from user
+		where user_name = #{emp}
+	</select>
+	
+	<!-- 2.Department -->
+	<select id="selectDepPKbyUserPK" resultType="int" parameterType="int">
+		select dep_ai
+			from user
+			where user_ai = #{user_ai}
+	</select>
+	
+	<select id="selectDepPKbyUserID" resultType="int" parameterType="String">
+		select dep_ai
+			from user
+		 	where user_id = #{user_id}
+	</select>
+	
+	<select id="selectDepPKbyDepName" resultType="int" parameterType="String">
+		select distinct dep_ai from department
+		where dep_name = #{dep_name}
+	</select> 
+	
+	<select id="selectDepNamebyDepPK" resultType="String" parameterType="int">
+		select dep_name from department
+		where dep_ai = #{dep_ai}
+	</select>
+	
+	<select id="selectDepList" resultType="java.util.HashMap" parameterType="int">
+		select user_ai,dep_ai,rank_ai,user_name 
+		from user
+		where dep_ai = #{dep_ai}
+	</select>
+	
+	<!-- 3.Rank -->
+	<select id="selectRankPKbyUserID" resultType="int" parameterType="String">
+		select rank_ai
+			from user
+		 	where user_id = #{user_id}
+	</select>
+	
+	
+	<select id="selectRankPKbyUserPK" resultType="int" parameterType="int">
+		select rank_ai
+			from user
+			where user_ai = #{user_ai}
+	</select>
+		
+	<select id="selectRankPKByName" resultType="int" parameterType="String">
+		select rank_ai
+			from rank
+			where rank_name = #{rank_name}
+	</select>
+	<!-- ======================================================================= -->
+	<!-- Refugee Codes -->
+
+	
+	<select id="selectRankName" resultType="String" parameterType="int">
+		select rank_name from rank
+		where rank_ai = #{rank_ai}
+	</select>
+
+</mapper>

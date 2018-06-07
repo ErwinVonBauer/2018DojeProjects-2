@@ -1,0 +1,28 @@
+package com.groupware.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import com.groupware.vo.ApprovalVo;
+
+/*
+ * 각 DAO에는 이름과 역할에 관련된 쿼리문만 넣자
+ * 1.AprovDao->결재 관련 쿼리문
+ * 2.DraftDao->문서 관련 쿼리문
+ * 3.LineDao->결재라인 관련 쿼리문
+ * 4.UserDao->회원정보 관련 쿼리문
+*/
+
+@Mapper
+@SuppressWarnings("rawtypes")
+public interface AprovDao {
+	public void insertaprov(ApprovalVo aprovvo);
+	public List<HashMap> selectAprov(int user_ai);
+	public void updateAprovStatus(int aprov_ai);
+	public List<HashMap> selectAprovByDep(int dep_ai);
+	public List<HashMap> selectAprovByDoc(int draft_ai);
+	public List<HashMap> selectAprovByRank(int rank_ai);
+	public List<HashMap> selectAprovByName(String aprov_title);
+	public List<HashMap> selectAllAprov();
+}

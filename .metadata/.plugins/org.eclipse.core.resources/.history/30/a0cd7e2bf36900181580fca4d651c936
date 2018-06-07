@@ -1,0 +1,27 @@
+package com.groupware.dao;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.groupware.vo.LineVo;
+
+/*
+ * 각 DAO에는 이름과 역할에 관련된 쿼리문만 넣자
+ * 3.LineDao->결재라인 관련 쿼리문
+*/
+
+@Mapper
+@SuppressWarnings("rawtypes")
+public interface LineDao {
+	public String[] selectAplsPK();
+	public String[] selectAplsName();
+	public String selectLineContentbyPK(int apl_ai);
+	public void insertApl(LineVo linevo);
+	
+
+
+
+	
+}

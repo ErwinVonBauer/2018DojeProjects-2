@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+header>a{
+	width: 200px;
+	height: 100px;
+}
+
+header>h1>a{
+	float: left;
+	font-size: 20pt;
+	list-style: none;
+	width: 200px;
+	height: 100px;
+}
+
+header>.topmenu{
+	float: right;
+	width: 600px;
+	height: 100px;
+	list-style: none;
+}
+
+header>.topmenu>li{
+	float: left;
+	width: 150px;
+	font-size: 15pt;
+	text-align: center;
+	transition: 0.8s;
+}
+
+header>.topmenu>li>a{
+	text-decoration: none;
+}
+
+.topmenu>li:hover {
+	background-color: #0000FF;
+	color: #FFFFFF;
+}

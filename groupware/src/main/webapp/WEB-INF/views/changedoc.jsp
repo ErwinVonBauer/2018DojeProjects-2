@@ -18,7 +18,7 @@ href="${pageContext.request.contextPath}/resources/style
 <%@include file="/WEB-INF/importviews/nav.jsp"%>
 <section>
 	<div id="maincontent">
-	<form id="form" action="/insertline" method="get">
+	<form id="form" action="/updatedoc" method="get">
 	<input type="hidden" id="draft_ai" name="draft_ai" value="${vo.getDraft_ai()}"/>
 	<input type="hidden" id="user_ai" name="user_ai" value="${vo.getUser_ai()}"/>
 	<input type="hidden" id="dep_ai" name="dep_ai" value="${vo.getDep_ai()}"/>

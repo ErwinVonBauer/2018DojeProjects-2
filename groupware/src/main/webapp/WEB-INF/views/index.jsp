@@ -17,7 +17,6 @@ href="${pageContext.request.contextPath}/resources/style
 <%@include file="/WEB-INF/importviews/nav.jsp"%>
 <section>
 <div id="maincontent">
-
 </div>
 </section>
 </body>

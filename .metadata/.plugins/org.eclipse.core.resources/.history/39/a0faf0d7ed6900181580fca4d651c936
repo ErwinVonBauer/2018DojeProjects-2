@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.groupware.dao.LineDao">
+	
+	<select id="selectAplsPK" resultType="String" parameterType="String">
+		select apl_ai from approvalline;
+	</select>
+	
+	<select id="selectAplsName" resultType="String" parameterType="String">
+		select apl_name from approvalline;
+	</select>
+	
+	<select id="selectLineContentbyPK" resultType="String" parameterType="int">
+		select apl_content from approvalline
+		where apl_ai = #{apl_ai}
+	</select>
+	
+	<insert id="insertApl" parameterType="com.groupware.vo.LineVo">
+		insert into approvalline
+		(apl_content,apl_name,apl_memo) 
+		values(#{apl_content},#{apl_name},#{apl_memo})
+	</insert>
+	
+	<select id="selectEmp" resultType="java.util.HashMap" parameterType="String">
+		select user_ai,dep_ai,rank_ai,user_name 
+		from user
+		where user_name = #{emp}
+	</select>
+	
+	<select id="selectDep" resultType="java.util.HashMap" parameterType="int">
+		select user_ai,dep_ai,rank_ai,user_name 
+		from user
+		where dep_ai = #{dep_ai}
+	</select>
+	
+	<select id="selectDepName" resultType="String" parameterType="int">
+		select dep_name from department
+		where dep_ai = #{dep_ai}
+	</select>
+
+	
+	<select id="selectRankName" resultType="String" parameterType="int">
+		select rank_name from rank
+		where rank_ai = #{rank_ai}
+	</select>
+	
+
+	
+	<select id="selectDepPKbyName" resultType="int" parameterType="String">
+		select distinct dep_ai from department
+		where dep_name = #{dep_name}
+	</select> 
+
+</mapper>

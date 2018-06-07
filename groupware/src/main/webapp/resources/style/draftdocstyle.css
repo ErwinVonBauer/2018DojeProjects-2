@@ -28,20 +28,19 @@ section>#maincontent{
 	width: 183px;
 	height: 30px;
 	font-size: 15px;
+	margin-top: 50px;
 }
 
 #maincontent>#doclist>#createbtn{
 	width: 183px;
 	height: 30px;
 	font-size: 15px;
-	margin-top: 323px;
 }
 
 #maincontent>#doclist>#delbtn{
 	width: 183px;
 	height: 30px;
 	font-size: 15px;
-	margin-top: 323px;
 }
 
 #maincontent>#sortmenu{

@@ -1,7 +1,6 @@
 package com.groupware.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.groupware.service.AprovService;
 import com.groupware.vo.ApprovalVo;
-import com.groupware.vo.DraftVo;
-import com.groupware.vo.UserVo;
 
 @Controller
 public class AprovController {

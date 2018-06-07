@@ -22,7 +22,7 @@ public class UserController {
 	}
 
 	//2.로그인 확인
-		@RequestMapping (value="/userlogincheck.ajax",produces = "application/json")
+		@RequestMapping (value="/userlogincheck.ajax",produces = "application/text; charset=utf8")
 		@ResponseBody
 		public String loginCheck(HttpServletRequest req){
 			return userservice.loginCheck(req);

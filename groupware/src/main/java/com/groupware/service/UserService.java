@@ -27,34 +27,26 @@ public class UserService{
 		System.out.println("success");
 
 		//session.setAttribute(name, value);
-		userdao.updatenewuser(userVo);
+		userdao.insertUser(userVo);
 		return model;
 	}
 
 	//2.로그인 서비스
-
-//	리턴값의 0은 부저정인 의미로 안쓰인다.
-//	숫자를 리턴할꺼면 -1로 리턴하고
-//	문자열이 좋다
-//	ex T, F
 	public String loginCheck(HttpServletRequest req){
 		String user_id = req.getParameter("user_id");
 		String user_pw = req.getParameter("user_pw");
 		String returnStr = "";
+		
 		UserVo userVo = new UserVo();
 		userVo.setUser_id(user_id);
 		userVo.setUser_pw(user_pw);
-		System.out.println(user_id);
-		System.out.println(user_pw);
-
 		int cnt = userdao.selectUserCount(userVo);
-		System.out.println(cnt);
 		
 		if(cnt == 1){
 			commonservice.addSession("id", user_id);
-			returnStr = "1";
+			returnStr = "T";
 		}else{
-			returnStr = "-1";
+			returnStr = "F";
 		}
 		return returnStr;
 	}
@@ -66,13 +58,14 @@ public class UserService{
 		return model;
 	}
 	
+	//4.결재생성에 쓰일 회원정보 미리보기
 	public String loaduserpreview(HttpServletRequest req) {
 		String originalpk = req.getParameter("ai");
 		int user_ai = Integer.parseInt(originalpk);
-		int dep_ai = userdao.selectUserDepPK(user_ai);
-		int rank_ai = userdao.selectUserRankPK(user_ai);
-		String dep = linedao.selectDepName(dep_ai);
-		String rank = linedao.selectRankName(rank_ai);
+		int dep_ai = userdao.selectDepPKbyUserPK(user_ai);
+		int rank_ai = userdao.selectRankPKbyUserPK(user_ai);
+		String dep = userdao.selectDepNamebyDepPK(dep_ai);
+		String rank = userdao.selectRankNamebyRankPK(rank_ai);
 		
 		String userinfo = dep+","+rank;
 		return userinfo;

@@ -18,10 +18,9 @@ public class LineController {
 	@Autowired LineService lineservice;
 	@Autowired CommonService commonservice;
 	
-	
 	@RequestMapping("/approvalline")
 	public ModelAndView showapprovalline(HttpServletRequest req) {
-		return commonservice.selectdoc(req);
+		return lineservice.goapprovalline(req);
 	}
 	
 	@RequestMapping(value="/linesearch.ajax")

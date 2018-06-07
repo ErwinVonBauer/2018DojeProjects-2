@@ -1,0 +1,27 @@
+package com.groupware.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.groupware.vo.UserVo;
+
+/*
+ * 각 DAO에는 이름과 역할에 관련된 쿼리문만 넣자
+ * 4.UserDao->회원정보 관련 쿼리문
+*/
+
+@Mapper
+public interface UserDao {
+	public String selectUserPK(String userid);
+	public String selectDepPK(String userid);
+	public String selectRankPK(String userid);
+	
+	public void updatenewuser(UserVo vo);
+
+
+	public int selectUserCount(UserVo userVo);
+	public String[] selectUsers();
+	public String[] selectUsersPK();
+	public int selectUserRankPK(int user_ai);
+	public int selectUserDepPK(int user_ai);
+	public int selectRankPKByName(String rank_name);
+}

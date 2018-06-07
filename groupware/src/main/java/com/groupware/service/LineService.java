@@ -16,20 +16,28 @@ import com.groupware.vo.LineVo;
 import com.groupware.vo.UserVo;
 
 @Service
+@SuppressWarnings("rawtypes")
 public class LineService {
 	@Autowired LineDao linedao;
 	@Autowired DraftDao draftdao;
 	@Autowired UserDao userdao;
 	@Autowired CommonService commonservice;
 	
+	public ModelAndView goapprovalline(HttpServletRequest req) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("/approvalline");
+		return view;
+	}
+	
+	//1.결재라인 미리보기
 	public String loadlinepreview(HttpServletRequest req) {
 		String originalpk = req.getParameter("ai");
 		int apl_ai = Integer.parseInt(originalpk);
-		String content = linedao.selectLineContent(apl_ai);
+		String content = linedao.selectLineContentbyPK(apl_ai);
 		return content;
 	}
 	
-	
+	//2.결재라인에 필요한 유저 검색
 	public List<UserVo> linesearch(HttpServletRequest req) {
 		String[] reqarray = req.getParameterValues("searchinfos");
 		String[] searchinfos = reqarray[0].split(",");
@@ -38,56 +46,23 @@ public class LineService {
 		
 		List<UserVo> uservos = new ArrayList<UserVo>();
 		
-		//리팩토링 필요,임시메소드
 		if(searchoption.equals("emp")) {
-			List<HashMap> userlist = linedao.selectEmp(keyword);
-			if(userlist.size()!=0) {
-			for(int i=0;i<userlist.size();i++) {
-				UserVo vo = new UserVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
-				vo.setUser_ai((int)userlist.get(i).get("user_ai"));
-				vo.setDep_ai((int)userlist.get(i).get("dep_ai"));
-				vo.setRank_ai((int)userlist.get(i).get("rank_ai"));
-				vo.setUser_name((String)userlist.get(i).get("user_name"));
-				vo.setDep_name(linedao.selectDepName((int) userlist.get(i).get("dep_ai")));
-				vo.setRank_name(linedao.selectRankName((int) userlist.get(i).get("rank_ai")));
-				uservos.add(vo);
-				System.out.println(uservos.get(i).toString());
-			}
-			return uservos;
-			}else {
-				System.out.println("warning no results!!!");
-				return null;
-			}
+			List<HashMap> userlist = userdao.selectUserListbyUserName(keyword);
+			uservos = commonservice.makeUserVoList(userlist);
 		}else if(searchoption.equals("dep")) {
-			int dep_ai = linedao.selectDepPKbyName(keyword);
-			List<HashMap> userlist = linedao.selectDep(dep_ai);
-			System.out.println(userlist.size());
-			if(userlist.size()!=0) {
-			for(int i=0;i<userlist.size();i++) {
-				UserVo vo = new UserVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
-				vo.setUser_ai((int)userlist.get(i).get("user_ai"));
-				vo.setDep_ai((int)userlist.get(i).get("dep_ai"));
-				vo.setRank_ai((int)userlist.get(i).get("rank_ai"));
-				vo.setUser_name((String)userlist.get(i).get("user_name"));
-				vo.setDep_name(linedao.selectDepName((int) userlist.get(i).get("dep_ai")));
-				vo.setRank_name(linedao.selectRankName((int) userlist.get(i).get("rank_ai")));
-				uservos.add(vo);
-				System.out.println(uservos.get(i).toString());
-			}
-			return uservos;
-			}else {
-				System.out.println("warning no results!!!");
-				return null;
-			}
+			int dep_ai = userdao.selectDepPKbyDepName(keyword);
+			List<HashMap> userlist = userdao.selectUserListbyDepPK(dep_ai);
+			uservos = commonservice.makeUserVoList(userlist);
 		}else {
-			
-			System.out.println("unavaliable options!!!");
-			return null;
+			System.err.println("unavaliable options!!!");
+			uservos = null;
 		}
+		return uservos;
 	}
 	
+	//3.결재라인 DB삽입 
 	public String insertline(LineVo linevo,String viewName) {
-		linedao.insertline(linevo);
+		linedao.insertApl(linevo);
 		return viewName;
 	}
 }

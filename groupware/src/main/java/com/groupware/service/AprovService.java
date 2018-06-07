@@ -3,7 +3,6 @@ package com.groupware.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +14,22 @@ import com.groupware.dao.DraftDao;
 import com.groupware.dao.LineDao;
 import com.groupware.dao.UserDao;
 import com.groupware.vo.ApprovalVo;
-import com.groupware.vo.DraftVo;
-import com.groupware.vo.UserVo;
 
 @Service
+@SuppressWarnings("rawtypes")
 public class AprovService {
+	@Autowired CommonService commonservice;
 	@Autowired AprovDao aprovdao;
 	@Autowired LineDao linedao;
 	@Autowired DraftDao draftdao;
 	@Autowired UserDao userdao;
 	
+	//1.결재올리기에 필요한 정보(유저,문서,라인)추가
 	public ModelAndView showmakeapproval(HttpServletRequest req) {
 		String[] docspk = draftdao.selectDocsPK(); //문서PK
-		String[] docs = draftdao.selectDocs(); //문서명
+		String[] docs = draftdao.selectDocNames(); //문서명
 		String[] aplspk = linedao.selectAplsPK();
-		String[] apls = linedao.selectApls();
+		String[] aplsname = linedao.selectAplsName();
 		String [] userspk = userdao.selectUsersPK();
 		String [] users = userdao.selectUsers();
 		
@@ -43,7 +43,7 @@ public class AprovService {
 		}
 		
 		for(int i=0;i<aplspk.length;i++) {
-			aplmap.put(apls[i], Integer.parseInt(aplspk[i]));
+			aplmap.put(aplsname[i], Integer.parseInt(aplspk[i]));
 		}
 		
 		for(int i=0;i<userspk.length;i++) {
@@ -58,112 +58,66 @@ public class AprovService {
 		return view;
 	}
 	
+	//2.결재 DB삽입
 	public String insertaprov(ApprovalVo aprovvo,String view){
-		int dep_ai = userdao.selectUserDepPK(aprovvo.getUser_ai());
-		int rank_ai = userdao.selectUserRankPK(aprovvo.getUser_ai());
+		int dep_ai = userdao.selectDepPKbyUserPK(aprovvo.getUser_ai());
+		int rank_ai = userdao.selectRankPKbyUserPK(aprovvo.getUser_ai());
 		aprovvo.setDep_ai(dep_ai);
 		aprovvo.setRank_ai(rank_ai);
-		aprovdao.insertaprov(aprovvo);
+		aprovdao.insertAprov(aprovvo);
 		return view;
 	}
 	
+	//3.결재리스트 생성
 	public List<ApprovalVo> getaprovlist(HttpServletRequest req) {
 		String userid = (String) req.getParameter("userid");
-		int user_ai = Integer.parseInt(userdao.selectUserPK(userid));
+		int user_ai = userdao.selectUserPK(userid);
 		
-		List<HashMap> aprovlist = aprovdao.selectAprov(user_ai);
+		List<HashMap> aprovlist = aprovdao.selectAprovbyUserPK(user_ai);
 		List<ApprovalVo> aprovvos = new ArrayList<ApprovalVo>();
+		aprovvos = commonservice.makeAprovVoList(aprovlist);
 		
-		if(aprovlist.size()!=0) {
-		for(int i=0;i<aprovlist.size();i++) {
-			ApprovalVo vo = new ApprovalVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
-			String sLatestLoginDate = "";
-			
-			try {
-				  java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				  sLatestLoginDate = formatter.format(aprovlist.get(i).get("aprov_reg"));
-				} catch (Exception ex) {
-				  ex.printStackTrace();
-				  sLatestLoginDate = "";
-				}
-			
-			vo.setAprov_ai((int)aprovlist.get(i).get("aprov_ai"));
-			vo.setAprov_title((String)aprovlist.get(i).get("aprov_title"));
-			vo.setAprov_reg(sLatestLoginDate);
-			vo.setAprov_status((int)aprovlist.get(i).get("aprov_status"));
-			aprovvos.add(vo);
-		}
-			return aprovvos;
-		}else {
-			System.out.println("warning no results!!!");
-			return null;
-		}
+		return aprovvos;
 	}
 	
+	//4.결재 수락 및 완료
 	public ModelAndView completeaprov(HttpServletRequest req,String viewName) {
 		ModelAndView view = new ModelAndView();
 		int aprov_pk = Integer.parseInt(req.getParameter("pk"));
-		System.out.println(aprov_pk);
 		
 		aprovdao.updateAprovStatus(aprov_pk);
 		view.setViewName(viewName);
 		return view;
 	}
-
+	
+	//5.결재내역 검색
 	public List<ApprovalVo> aprovsearch(HttpServletRequest req) {
 		String[] reqarray = req.getParameterValues("searchinfos");
 		String[] searchinfos = reqarray[0].split(",");
 		String searchoption = searchinfos[0];
 		String keyword = searchinfos[1];	
 		List<ApprovalVo> aprovvos = new ArrayList<ApprovalVo>();
-		
-		//리팩토링 필요,임시메소드
+
 		if(searchoption.equals("dep")) {
-			int dep_pk = linedao.selectDepPKbyName(keyword);
+			int dep_pk = userdao.selectDepPKbyDepName(keyword);
 			List<HashMap> deplist = aprovdao.selectAprovByDep(dep_pk);
-			aprovvos = makeSearchList(deplist, aprovvos);
+			aprovvos = commonservice.makeAprovVoList(deplist);
 		}else if(searchoption.equals("doc")) {
-			int draft_pk = draftdao.selectDocPK(keyword);
+			int draft_pk = draftdao.selectDocPKbyDraftName(keyword);
 			List<HashMap> doclist = aprovdao.selectAprovByDoc(draft_pk);
-			aprovvos = makeSearchList(doclist, aprovvos);
+			aprovvos = commonservice.makeAprovVoList(doclist);
 		}else if(searchoption.equals("rank")) {
-			int rank_pk = userdao.selectRankPKByName(keyword);
+			int rank_pk = userdao.selectRankPKByRankName(keyword);
 			List<HashMap> ranklist = aprovdao.selectAprovByRank(rank_pk);
-			aprovvos = makeSearchList(ranklist, aprovvos);
+			aprovvos = commonservice.makeAprovVoList(ranklist);
 		}else if(searchoption.equals("name")) {
 			List<HashMap> namelist = aprovdao.selectAprovByName(keyword);
-			aprovvos = makeSearchList(namelist, aprovvos);
+			aprovvos = commonservice.makeAprovVoList(namelist);
 		}else if(searchoption.equals("all")) {
 			List<HashMap> alllist = aprovdao.selectAllAprov();
-			aprovvos = makeSearchList(alllist, aprovvos);
+			aprovvos = commonservice.makeAprovVoList(alllist);
 		}
 		return aprovvos;
 	}
 	
-	public List<ApprovalVo> makeSearchList(List<HashMap> list,List<ApprovalVo> aprovvos){
-		if(list.size()!=0) {
-			for(int i=0;i<list.size();i++) {
-				ApprovalVo vo = new ApprovalVo(); // arrayList든 Vector든 아이템을 추가하려면 다른 레퍼런스(주소)를 가지는 새로운 객체를 넣어주어야함. 그래서 new 연산자를 사용해야한다
-				String sLatestLoginDate = "";
-				
-				try {
-					  java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					  sLatestLoginDate = formatter.format(list.get(i).get("aprov_reg"));
-					} catch (Exception ex) {
-					  ex.printStackTrace();
-					  sLatestLoginDate = "";
-					}
-				
-				vo.setAprov_ai((int)list.get(i).get("aprov_ai"));
-				vo.setAprov_title((String)list.get(i).get("aprov_title"));
-				vo.setAprov_reg(sLatestLoginDate);
-				vo.setAprov_status((int)list.get(i).get("aprov_status"));
-				aprovvos.add(vo);
-			}
-			return aprovvos;
-			}else {
-				System.out.println("warning no results!!!");
-				return null;
-			}
-	}
 }

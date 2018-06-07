@@ -6,16 +6,27 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.groupware.vo.DraftVo;
 
+/*
+ * 각 DAO에는 이름과 역할에 관련된 쿼리문만 넣자
+ * 2.DraftDao->문서 관련 쿼리문
+ * 단일PK셀렉트->int,다중PK셀렉트->String
+*/
+
 @Mapper
+@SuppressWarnings("rawtypes")
 public interface DraftDao {
+	
 	public int selectDocCount();
-	public int selectDocPK(String draft_name);
-	public String[] selectDocs();
+	public int selectDocPKbyDraftName(String draft_name);
 	public String[] selectDocsPK();
-	public String selectDocContent(int draft_ai);
-	public DraftVo selectDraftInfos(int pk);
+	
+	public String selectDocContentbyDraftPk(int draft_ai);
+	public String[] selectDocNames();
+	
+	public DraftVo selectDraftInfosbyDraftPK(int pk);
+	public List<HashMap> selectDraftList();
+	
 	public void insertDoc(DraftVo vo);
 	public void updateDoc(DraftVo vo);
-	public List<HashMap> selectDraft();
-	public void deleteDraft(int draft_ai);
+	public void deleteDoc(int draft_ai);
 }

@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+aside>#sidemenu{
+	float: left;
+	background-color: #00FF80;
+	width: 200px;
+	height: 550px;
+}	
+
+aside>#sidemenu>p{
+	width: 200px;
+}
+
+aside>#sidemenu>p{
+	font-size: 20pt;
+	padding-bottom: 10px;
+}
+
+aside>#sidemenu>a{
+	width: 200px;
+	font-size: 13pt;
+	padding-bottom: 10px;
+	float: left;
+	text-decoration: none;
+	color: #0080FF;
+}
+
+aside>#sidemenu>a:hover{
+	color: #170B3B;
+	transition: 0.5s;
+}

@@ -106,6 +106,7 @@ href="${pageContext.request.contextPath}/resources/style
 		});
 	}
 	
+	
 	function showlinepreview(pk){
 		lineai = pk;
 		$.ajax({

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.groupware.dao.DraftDao">
-	<select id="selectDraft" resultType="java.util.HashMap">
-		select draft_ai,draft_name,draft_type,
-		draft_temp,draft_important from draft
-	</select>
 	
 	<select id="selectDocCount" resultType="int" parameterType="int">
 		select count(draft_ai) from draft
 	</select>
 	
-	<select id="selectDocPK" resultType="int" parameterType="String">
+	<select id="selectDocPKbyDraftName" resultType="int" parameterType="String">
 		select draft_ai from draft
 		where draft_name = #{draft_name};
 	</select>
@@ -19,20 +15,25 @@
 		select draft_ai from draft;
 	</select>
 	
-	<select id="selectDocs" resultType="String" parameterType="String">
+	<select id="selectDocContentbyDraftPk" resultType="String" parameterType="int">
+		select draft_content from draft
+		where draft_ai = #{draft_ai}
+	</select>
+	
+	<select id="selectDocNames" resultType="String" parameterType="String">
 		select draft_name from draft;
 	</select>
-
-	<select id="selectDraftInfos" resultType="com.groupware.vo.DraftVo" parameterType="int">
+	
+	<select id="selectDraftInfosbyDraftPK" resultType="com.groupware.vo.DraftVo" parameterType="int">
 		select * from draft
 		where draft_ai = #{pk}
 	</select>
 	
-	<select id="selectDocContent" resultType="String" parameterType="int">
-		select draft_content from draft
-		where draft_ai = #{draft_ai}
+	<select id="selectDraftList" resultType="java.util.HashMap">
+		select draft_ai,draft_name,draft_type,
+		draft_temp,draft_important from draft
 	</select>
-
+	
 	<insert id="insertDoc" parameterType="com.groupware.vo.DraftVo">
 		insert into draft
 		(user_ai,dep_ai,rank_ai,

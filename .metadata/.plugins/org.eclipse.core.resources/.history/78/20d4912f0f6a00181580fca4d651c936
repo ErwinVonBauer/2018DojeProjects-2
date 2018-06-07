@@ -1,0 +1,107 @@
+package com.groupware.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import com.groupware.dao.DraftDao;
+import com.groupware.dao.UserDao;
+import com.groupware.vo.DraftVo;
+
+@Service
+public class DraftService {
+	@Autowired DraftDao draftdao;
+	@Autowired UserDao userdao;
+	@Autowired CommonService commonservice;
+	
+	//1.미리보기 보여주기
+	public String loadpreview(HttpServletRequest req) {
+		String originalpk = req.getParameter("ai");
+		int draft_ai = Integer.parseInt(originalpk);
+		String content = draftdao.selectDocContentbyDraftPk(draft_ai);
+		return content;
+	}
+	
+	//2.문서DB에 삽입
+	public ModelAndView insertdoc(DraftVo draftvo, String viewName) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName(viewName);
+		model.addObject("vo",draftvo);
+		
+		draftdao.insertDoc(draftvo);
+		return model;
+	}
+	
+	//3.문서업데이트
+	public String updatedoc(DraftVo draftvo, String viewName) {
+		commonservice.deleteOldImage(draftvo);
+		draftdao.updateDoc(draftvo);
+		return viewName;
+	}
+	
+	//4.문서작성페이지이동(작성자정보를 추가)
+	public ModelAndView linkwritedoc(String viewName) {
+		String loginedid = commonservice.getSession("id");
+		int userai = userdao.selectUserPK(loginedid);
+		int depai = userdao.selectDepPKbyUserID(loginedid);
+		int rankai = userdao.selectRankPKbyUserID(loginedid);
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName(viewName);
+		view.addObject("userai",userai);
+		view.addObject("depai",depai);
+		view.addObject("rankai",rankai);
+		
+		return view;
+	}
+	
+	//5.문서편집페이지이동
+	public ModelAndView linkchangedoc(HttpServletRequest req,DraftVo vo,String viewName) {
+		int pk = vo.getDraft_ai();
+		ModelAndView model = new ModelAndView();
+		DraftVo resultvo = draftdao.selectDraftInfosbyDraftPK(pk);
+		
+		model.setViewName(viewName);
+		model.addObject("vo",resultvo);
+		
+		return model;
+	}
+	
+	//6.문서정보List제작
+	public List<DraftVo> getDraft() {
+	
+		List<HashMap> draftlist = draftdao.selectDraftList();
+		List<DraftVo> draftvos = new ArrayList<DraftVo>();
+		
+		if(draftlist.size()!=0) {
+		for(int i=0;i<draftlist.size();i++) {
+			// arrayList든 Vector든 아이템을 추가할때 다른 레퍼런스를 가지는 새로운 객체를 넣어주어야함. 
+			//그래서 new 연산자를 사용해야한다
+			DraftVo vo = new DraftVo(); 
+			vo.setDraft_ai((int)draftlist.get(i).get("draft_ai"));
+			vo.setDraft_name((String)draftlist.get(i).get("draft_name"));
+			vo.setDraft_type((String)draftlist.get(i).get("draft_type"));
+			vo.setDraft_temp((int)draftlist.get(i).get("draft_temp"));
+			vo.setDraft_important((int)draftlist.get(i).get("draft_important"));
+			draftvos.add(vo);
+		}
+			return draftvos;
+		}else {
+			System.err.println("warning no results!!!");
+			return null;
+		}
+	}
+	
+	//7.문서삭제
+	public String deleteDoc(HttpServletRequest req) {
+		String resultStr = "삭제되었습니다";
+		int draft_pk = Integer.parseInt(req.getParameter("ai"));
+		
+		draftdao.deleteDoc(draft_pk);
+		return resultStr;
+	}
+}

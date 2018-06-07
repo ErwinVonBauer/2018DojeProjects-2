@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" 
 href="${pageContext.request.contextPath}/resources/style
 /footerstyle.css" media="screen"/>
-<title>Insert title here</title>
+<title>FooterView</title>
 </head>
 <body>
 <footer>

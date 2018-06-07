@@ -12,7 +12,7 @@ href="${pageContext.request.contextPath}/resources/style
 </head>
 <body>
 <header>
-<a href="index"><h1>TestGroupware</h1></a>
+<h1><a href="index">TestGroupware</a></h1>
 <ul class="topmenu" id="logout">
 <li>안녕하세요!</li>
 <li>알림</li>

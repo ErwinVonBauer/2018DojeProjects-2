@@ -1,22 +1,19 @@
 package com.groupware.dao;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.groupware.vo.LineVo;
-import com.groupware.vo.UserVo;
+
+/*
+ * 각 DAO에는 이름과 역할에 관련된 쿼리문만 넣자
+ * 3.LineDao->결재라인 관련 쿼리문
+ * 단일PK셀렉트->int,다중PK셀렉트->String
+*/
 
 @Mapper
 public interface LineDao {
-	public List<HashMap> selectEmp(String emp);
-	public List<HashMap> selectDep(int dep_ai);
-	public String selectDepName(int dep_ai);
-	public String selectRankName(int rank_ai);
-	public String selectLineContent(int apl_ai);
-	public int selectDepPKbyName(String dep_name);
-	public String[] selectApls();
 	public String[] selectAplsPK();
-	public void insertline(LineVo linevo);
+	public String[] selectAplsName();
+	public String selectLineContentbyPK(int apl_ai);
+	
+	public void insertApl(LineVo linevo);
 }

@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" 
 href="${pageContext.request.contextPath}/resources/style
 /navstyle.css" media="screen"/>
-<title>Insert title here</title>
+<title>NavView</title>
 </head>
 <body>
 <nav>

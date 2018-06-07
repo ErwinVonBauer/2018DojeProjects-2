@@ -40,27 +40,15 @@ public class DraftController {
 	public String loadpreview(HttpServletRequest req) {
 		return draftservice.loadpreview(req);
 	}
-	
-	@RequestMapping(value="/makedoclists.ajax",produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String makedoclist(HttpServletRequest req,DraftVo draftvo) {
-		return draftservice.makedoclist(req,draftvo);
-	}
-	
+
 	@RequestMapping("gochangedoc")
-	public ModelAndView gochangedoc(HttpServletRequest req,DraftVo draftvo) {
-		return draftservice.gochangedoc(req,draftvo,"/changedoc");
-	}
-	
-	@RequestMapping(value="/godeldoc.ajax",produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String godeldoc(HttpServletRequest req) {
-		return draftservice.godeldoc(req);
+	public ModelAndView linkchangedoc(HttpServletRequest req,DraftVo draftvo) {
+		return draftservice.linkchangedoc(req,draftvo,"/changedoc");
 	}
 
 	@RequestMapping("/writedoc")
-	public ModelAndView adduserinfo() {
-		return draftservice.adduserinfo();
+	public ModelAndView linkwritedoc(String viewName) {
+		return draftservice.linkwritedoc("/writedoc");
 	}
 	
 	@RequestMapping("/insertdoc")
@@ -71,6 +59,12 @@ public class DraftController {
 	@RequestMapping("/updatedoc")
 	public String updatedoc(DraftVo draftvo) {
 		return draftservice.updatedoc(draftvo,"/index");
+	}
+	
+	@RequestMapping(value="/godeldoc.ajax",produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String deleteDoc(HttpServletRequest req) {
+		return draftservice.deleteDoc(req);
 	}
 	
 }
